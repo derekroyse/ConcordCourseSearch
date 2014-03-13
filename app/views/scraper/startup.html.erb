@@ -1,7 +1,7 @@
 <% provide(:title, 'Scraper Test') %>
 <h1>Scraper Test</h1>
 <p>
-  <%= form_tag :action => '/startup' do %>
+  <%= form_tag :action => 'startup' do %>
   <%= select_tag(:selection, options_for_select([['Spring 2014', 201402],
 						  ['Fall 2013', 201401],
 						  ['Spring 2013', 201302],
@@ -10,8 +10,10 @@
   <%= submit_tag "Submit" %>
   <% end %>
  
-  <%= scrape_site.html_safe %>
+  <%= print :selection %>
+  <%= scrape_site(params[:selection]).html_safe %>
   <br>
   
 </p>
+  
   

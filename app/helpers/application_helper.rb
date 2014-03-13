@@ -1,4 +1,5 @@
 module ApplicationHelper
+  @@choice = 201402
   
   # Returns the full title on a per-page basis.
   def full_title(page_title)
@@ -11,8 +12,8 @@ module ApplicationHelper
   end # end full_title
   
   # Returns content from a scraped page.
-  def scrape_site
-    choice = 201402
+  def scrape_site(choice)
+    @@choice = choice
     i = 0
     j = 0
     x = 0
@@ -22,7 +23,12 @@ module ApplicationHelper
     agent = Mechanize.new
     data = agent.get('https://apps.concord.edu/schedules/seatstaken.php')
     select_list = data.form_with(:action => '/schedules/seatstaken.php')
-    select_list.field_with(:name =>"term").option_with(:value => '201402').click
+ 
+    if @@choice.inspect == "nil"
+      select_list.field_with(:name =>"term").value = 201402
+    else
+      select_list.field_with(:name =>"term").value = @@choice
+    end
     
     data = agent.submit(select_list)
     rows = data.search("td")
@@ -63,8 +69,8 @@ module ApplicationHelper
     formatted_records += "</table>"
     
     formatted_final = formatted_headers + formatted_records
-  
-    return formatted_final
     
+    #return formatted_final
   end # end scrape_site
+  
 end #end module
