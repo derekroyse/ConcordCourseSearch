@@ -1,7 +1,6 @@
 <% provide(:title, 'Scraper Test') %>
 <h1>Scraper Test</h1>
 <p>
-
 <div class="semesters">
   <%= form_tag :action => 'startup' do %>						  
   <%= select_tag(:selection, options_for_select([['Fall Semester 2014', 201501],
@@ -49,14 +48,15 @@
     ['Summer Intersession 2001', 200103], ['Spring Semester 2001', 200102],  
     ['Fall Semester 2000', 200101],  	  ['Second Summer Term 2000', 200005],  
     ['First Summer Term 2000', 200004],	  ['Summer Intersession 2000', 200003],  
-    ['Spring Semester 2000', 200002],     ['Fall Semester 1999', 200001]]))%>						
+    ['Spring Semester 2000', 200002],     ['Fall Semester 1999', 200001]]))%>
+    <br>
     <%= submit_tag "Submit" %>
   <% end %>
 </div>
 
 <div class="search">
   <%= form_tag :action => 'search' do %>
-    <!-- CRN (Course Number) -->
+    <!-- CRN (Course Registration Number) -->
     <%= label_tag(:crn_input, "CRN") %>
     <%= text_field_tag :crn_input, "Course Registration Number" %>
     <!-- SUBJ (Subject) -->
@@ -69,8 +69,8 @@
     <%= submit_tag("Search") %>
   <% end %>
 </div>
-  
-  <%= scrape_site(params[:selection]).html_safe %>
+
+  <%= search(params[:crn_input], params[:subj_input], params[:crs_input]).html_safe %>
   <br>
   
 </p>
