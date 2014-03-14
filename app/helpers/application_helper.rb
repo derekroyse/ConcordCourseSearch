@@ -71,10 +71,10 @@ module ApplicationHelper
     
     formatted_final = formatted_headers + formatted_records
     
-    #return formatted_final
+    return formatted_final
   end # end scrape_site
   
-  def search(crn, subj, crs)
+  def search(crn, subj, crs, sec, title, ch, max, enr, avail, wl, days, stime, etime, bldgroom, wk, instructor, ef, starts)
 
      x = 0
      formatted_headers = "<table><tr class='table_header'>"
@@ -85,17 +85,15 @@ module ApplicationHelper
     formatted_records = ""
     
      while x < @@numRecords
-      if @@records[x][0].index(crn) != nil ||
-	 @@records[x][1].index(subj) != nil ||
-	 @@records[x][2].index(crs) != nil 
-	#&& @@records[x][3].index(SEC) != nil &&
-#	@@records[x][4].index(TITLE) != nil && @@records[x][5].index(CH) != nil &&
-#	@@records[x][6].index(MAX) != nil && @@records[x][7].index(ENR) != nil && 
-#	@@records[x][8].index(AVAIL) != nil && @@records[x][9].index(WL) != nil &&
-#	@@records[x][10].index(DAYS) != nil && @@records[x][11].index(STIME) != nil &&
-#	@@records[x][12].index(ETIME) != nil &&	@@records[x][13].index(BLDGROOM) != nil &&
-#	@@records[x][14].index(WK) != nil && @@records[x][15].index(INSTRUCTOR) != nil &&
-#	@@records[x][16].index(EF) != nil && @@records[x][17].index(STARTS) != nil &&
+      if  @@records[x][0].index(crn) != nil || @@records[x][1].index(subj) != nil ||
+	  @@records[x][2].index(crs) != nil ||	 @@records[x][3].index(sec) != nil ||
+	  @@records[x][4].index(title) != nil || @@records[x][5].index(ch) != nil ||
+	  @@records[x][6].index(max) != nil || 	 @@records[x][7].index(enr) != nil || 
+	  @@records[x][8].index(avail) != nil || @@records[x][9].index(wl) != nil ||
+	  @@records[x][10].index(days) != nil || @@records[x][11].index(stime) != nil ||
+	  @@records[x][12].index(etime) != nil ||@@records[x][13].index(bldgroom) != nil ||
+	  @@records[x][14].index(wk) != nil ||   @@records[x][15].index(instructor) != nil ||
+	  @@records[x][16].index(ef) != nil || 	 @@records[x][17].index(starts) != nil
 	formatted_records += "<tr>"
 	  for column in @@records[x]
 	    formatted_records += "<td>"+ column + "</td>"

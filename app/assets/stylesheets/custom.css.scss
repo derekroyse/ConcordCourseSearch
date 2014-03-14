@@ -3,7 +3,6 @@ $lightgray: #999;
 
 
 /* universal */
-
 html {
   overflow-y: scroll;
 }
@@ -120,10 +119,18 @@ td{
   padding:0 2px 0 2px;
 }
 
+/* Forms */
 .semesters{
  text-align:center; 
 }
 
 .search{
   text-align:center;
+  background-color:$lightgray;
+  border:2px solid black;
+}
+
+.search_panel{
+  float:left;
+  width:33%;
 }

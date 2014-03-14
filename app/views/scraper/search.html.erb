@@ -56,6 +56,7 @@
 
 <div class="search">
   <%= form_tag :action => 'search' do %>
+  <div class="search_panel">
     <!-- CRN (Course Registration Number) -->
     <%= label_tag(:crn_input, "CRN") %>
     <%= text_field_tag :crn_input, "Course Registration Number" %>
@@ -64,13 +65,73 @@
     <%= text_field_tag :subj_input, "Subject" %>
     <!-- CRS (Course Level Number) -->
     <%= label_tag(:crs_input, "CRS") %>
-    <%= text_field_tag :crs_input, "Course Number" %> 
-    <br>
+    <%= text_field_tag :crs_input, "Course Number" %>
+  </div>
+  <div class="search_panel">
+    <!-- SEC (Section Number) -->
+    <%= label_tag(:sec_input, "SEC") %>
+    <%= text_field_tag :sec_input, "Section Number" %>
+    <!-- TITLE -->
+    <%= label_tag(:title_input, "TITLE") %>
+    <%= text_field_tag :title_input, "Title" %>
+    <!-- CH (Credit Hours) -->
+    <%= label_tag(:ch_input, "CH") %>
+    <%= text_field_tag :ch_input, "Credit Hours" %>
+  </div>
+  <div class="search_panel">
+    <!-- MAX (Maximum Seats) -->
+    <%= label_tag(:max_input, "MAX") %>
+    <%= text_field_tag :max_input, "Maximum Seats" %>
+    <!-- ENR (Students Enrolled) -->
+    <%= label_tag(:enr_input, "ENR") %>
+    <%= text_field_tag :enr_input, "Students Enrolled" %>
+    <!-- AVAIL (Seats Available) -->
+    <%= label_tag(:avail_input, "AVAIL") %>
+    <%= text_field_tag :avail_input, "Seats Available" %>
+  </div>
+  <div class="search_panel">
+    <!-- WL (Waiting List) -->
+    <%= label_tag(:wl_input, "WL") %>
+    <%= text_field_tag :wl_input, "Waiting List" %>
+    <!-- DAYS (Meeting Days) -->
+    <%= label_tag(:days_input, "DAYS") %>
+    <%= text_field_tag :days_input, "Meeting Days" %>
+    <!-- STIME (Start Time) -->
+    <%= label_tag(:stime_input, "STIME") %>
+    <%= text_field_tag :stime_input, "Start Time" %>
+  </div>
+  <div class="search_panel">
+    <!-- ETIME (End Time) -->
+    <%= label_tag(:etime_input, "ETIME") %>
+    <%= text_field_tag :etime_input, "End Time" %>
+    <!-- BLDGROOM (Building/Room) -->
+    <%= label_tag(:bldgroom_input, "BLDG/ROOM") %>
+    <%= text_field_tag :bldgroom_input, "Building/Room" %>
+    <!-- WK (Weeks) -->
+    <%= label_tag(:wk_input, "WK") %>
+    <%= text_field_tag :wk_input, "Weeks" %>
+  </div>
+  <div class="search_panel">
+    <!-- INSTRUCTOR (Instructor Name) -->
+    <%= label_tag(:insructor_input, "INSTRUCTOR") %>
+    <%= text_field_tag :instructor_input, "Instructor Name" %>
+    <!-- EF (Estimated Fees) -->
+    <%= label_tag(:ef_input, "EF") %>
+    <%= text_field_tag :ef_input, "Estimated Fees" %>
+    <!-- STARTS ON (Starting Day) -->
+    <%= label_tag(:startson_input, "STARTS ON") %>
+    <%= text_field_tag :startson_input, "Starting Day" %>
+  </div>
     <%= submit_tag("Search") %>
   <% end %>
 </div>
 
-  <%= search(params[:crn_input], params[:subj_input], params[:crs_input]).html_safe %>
+  <%= search(params[:crn_input], params[:subj_input], params[:crs_input],
+	      params[:sec_input], params[:title_input], params[:ch_input],
+	      params[:max_input], params[:enr_input], params[:avail_input],
+	      params[:wl_input], params[:days_input], params[:stime_input],
+	      params[:etime_input], params[:bldgroom_input], params[:wk_input],
+	      params[:instructor_input], params[:ef_input], params[:startson_input],).html_safe %>
   <br>
   
 </p>
