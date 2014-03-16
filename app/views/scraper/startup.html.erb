@@ -59,68 +59,68 @@
   <div class="search_panel">
     <!-- CRN (Course Registration Number) -->
     <%= label_tag(:crn_input, "CRN") %>
-    <%= text_field_tag :crn_input, "Course Registration Number" %>
+    <%= text_field_tag :crn_input, nil, placeholder:"Course Registration Number" %>
     <!-- SUBJ (Subject) -->
     <%= label_tag(:subj_input, "SUBJ") %>
-    <%= text_field_tag :subj_input, "Subject" %>
+    <%= text_field_tag :subj_input, nil, placeholder:"Subject" %>
     <!-- CRS (Course Level Number) -->
     <%= label_tag(:crs_input, "CRS") %>
-    <%= text_field_tag :crs_input, "Course Number" %>
+    <%= text_field_tag :crs_input, nil, placeholder:"Course Number" %>
   </div>
   <div class="search_panel">
     <!-- SEC (Section Number) -->
     <%= label_tag(:sec_input, "SEC") %>
-    <%= text_field_tag :sec_input, "Section Number" %>
+    <%= text_field_tag :sec_input, nil, placeholder:"Section Number" %>
     <!-- TITLE -->
     <%= label_tag(:title_input, "TITLE") %>
-    <%= text_field_tag :title_input, "Title" %>
+    <%= text_field_tag :title_input, nil, placeholder:"Title" %>
     <!-- CH (Credit Hours) -->
     <%= label_tag(:ch_input, "CH") %>
-    <%= text_field_tag :ch_input, "Credit Hours" %>
+    <%= text_field_tag :ch_input, nil, placeholder:"Credit Hours" %>
   </div>
   <div class="search_panel">
     <!-- MAX (Maximum Seats) -->
     <%= label_tag(:max_input, "MAX") %>
-    <%= text_field_tag :max_input, "Maximum Seats" %>
+    <%= text_field_tag :max_input, nil, placeholder:"Maximum Seats" %>
     <!-- ENR (Students Enrolled) -->
     <%= label_tag(:enr_input, "ENR") %>
-    <%= text_field_tag :enr_input, "Students Enrolled" %>
+    <%= text_field_tag :enr_input, nil, placeholder:"Students Enrolled" %>
     <!-- AVAIL (Seats Available) -->
     <%= label_tag(:avail_input, "AVAIL") %>
-    <%= text_field_tag :avail_input, "Seats Available" %>
+    <%= text_field_tag :avail_input, nil, placeholder:"Seats Available" %>
   </div>
   <div class="search_panel">
     <!-- WL (Waiting List) -->
     <%= label_tag(:wl_input, "WL") %>
-    <%= text_field_tag :wl_input, "Waiting List" %>
+    <%= text_field_tag :wl_input, nil, placeholder:"Waiting List" %>
     <!-- DAYS (Meeting Days) -->
     <%= label_tag(:days_input, "DAYS") %>
-    <%= text_field_tag :days_input, "Meeting Days" %>
+    <%= text_field_tag :days_input, nil, placeholder:"Meeting Days" %>
     <!-- STIME (Start Time) -->
     <%= label_tag(:stime_input, "STIME") %>
-    <%= text_field_tag :stime_input, "Start Time" %>
+    <%= text_field_tag :stime_input, nil, placeholder:"Start Time" %>
   </div>
   <div class="search_panel">
     <!-- ETIME (End Time) -->
     <%= label_tag(:etime_input, "ETIME") %>
-    <%= text_field_tag :etime_input, "End Time" %>
+    <%= text_field_tag :etime_input, nil, placeholder:"End Time" %>
     <!-- BLDGROOM (Building/Room) -->
     <%= label_tag(:bldgroom_input, "BLDG/ROOM") %>
-    <%= text_field_tag :bldgroom_input, "Building/Room" %>
+    <%= text_field_tag :bldgroom_input, nil, placeholder:"Building/Room" %>
     <!-- WK (Weeks) -->
     <%= label_tag(:wk_input, "WK") %>
-    <%= text_field_tag :wk_input, "Weeks" %>
+    <%= text_field_tag :wk_input, nil, placeholder:"Weeks" %>
   </div>
   <div class="search_panel">
     <!-- INSTRUCTOR (Instructor Name) -->
     <%= label_tag(:insructor_input, "INSTRUCTOR") %>
-    <%= text_field_tag :instructor_input, "Instructor Name" %>
+    <%= text_field_tag :instructor_input, nil, placeholder:"Instructor Name" %>
     <!-- EF (Estimated Fees) -->
     <%= label_tag(:ef_input, "EF") %>
-    <%= text_field_tag :ef_input, "Estimated Fees" %>
+    <%= text_field_tag :ef_input, nil, placeholder:"Estimated Fees" %>
     <!-- STARTS ON (Starting Day) -->
     <%= label_tag(:startson_input, "STARTS ON") %>
-    <%= text_field_tag :startson_input, "Starting Day" %>
+    <%= text_field_tag :startson_input, nil, placeholder:"Starting Day" %>
   </div>
     <%= submit_tag("Search") %>
   <% end %>
