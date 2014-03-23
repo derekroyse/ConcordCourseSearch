@@ -1,11 +1,50 @@
 module ApplicationHelper
+  @@semesterString = ""
   @@choice = 201501
   @@headers = Array.new(18)
   @@records = Array.new(18){Array.new}
   @@numRecords = 0
+  
+  # Return a formatted semester string
+  def getSemester(choice)
+    if choice.nil? == false
+      @@choice = choice.to_i
+    end
+    
+    year = 0
+    semester = ""
+    fullSemesterTitle = ""
+    
+    ## First four digits = year
+    year = @@choice/100;
+    
+    ## Last digit = semester
+    if @@choice % year == 1
+      semester = "Fall Semester"
+      year = year - 1
+    elsif @@choice % year == 2
+      semester = "Spring Semester"
+    elsif @@choice % year == 3
+      semester = "Summer Intersession"
+    elsif @@choice % year == 4
+      semester = "First Summer Term"
+    elsif @@choice % year == 5
+      semester = "Second Summer Term"
+    elsif @@choice % year == 6
+      semester = "Graduate Summer Term"
+    elsif @@choice % year == 7
+      semester = "Full Summer Term"
+    else
+      semester = "Error"
+    end
+      
+    fullSemesterTitle = semester + " " + year.to_s
+    return fullSemesterTitle      
+  end
+  
   # Returns the full title on a per-page basis.
   def full_title(page_title)
-    base_title = "Ruby on Rails Tutorial Sample App"
+    base_title = "Concord University List of Courses"
     if page_title.empty?
       base_title
     else
@@ -15,7 +54,7 @@ module ApplicationHelper
   
   # Returns content from a scraped page.
   def scrape_site(choice)
-    @@choice = choice
+    #@@choice = choice
     i = 0
     j = 0
     x = 0
