@@ -61,9 +61,9 @@
     <h1><%= getSemester(params[:selection]).html_safe %></h1>
   </div>
   <div class="forms">
-    <%= link_to image_tag("search_button.png", alt: "Search"), '#openModal' %>
+    <%= link_to image_tag("search.png", alt: "Search"), '#openModal' %>
     <br>
-    <%= link_to image_tag("search_button.png", alt: "SiteCodes"), '#openModal' %>
+    <%= link_to image_tag("codes.png", alt: "Site Codes"), '#openModal' %>
   </div>
 </div> <!-- top info pane -->
 <div id="openModal" class="modalDialog"> 
@@ -161,7 +161,13 @@
 	<%= label_tag(:startson_input, "STARTS ON") %>
 	<%= text_field_tag :startson_input, nil, placeholder:"Starting Day" %>
       </div>
+      <div>
+	<%= radio_button_tag(:searchType, 0, true) %>
+	<%= label_tag(:search_in, "Inclusive") %>
+	<%= radio_button_tag(:searchType, 1) %>
+	<%= label_tag(:search_ex, "Exclusive") %>
 	<%= submit_tag("Search") %>
+      </div>
     <% end %> <!-- Search Form -->
   </div> <!-- Search Box -->
 </div> 

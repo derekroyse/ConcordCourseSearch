@@ -13,6 +13,10 @@ body {
   text-align:center;
 }
 
+body.modal-open{
+  overflow:hidden;
+}
+
 section {
   overflow:auto
 }
@@ -138,7 +142,6 @@ td{
   background: -ms-linear-gradient(top,  #686868 0%,#656565 54%,#757575 100%); /* IE10+ */
   background: linear-gradient(to bottom,  #686868 0%,#656565 54%,#757575 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#686868', endColorstr='#757575',GradientType=0 ); /* IE6-9 */
-
 }
 
 .titles{
@@ -190,8 +193,8 @@ input
   height:auto;
   display:inline-block;
   position:relative;
-  margin:5% auto;
-  padding: 5px 20px 13px 20px;
+  margin:1% auto;
+  padding: 5px 10px 13px 10px;
   border-radius: 10px;
   background: #fff;
   background: -moz-linear-gradient(#fff, #999);
@@ -212,9 +215,12 @@ input
   width:33%;
 }
 
+input[type=radio]{
+}
+
 /* Close button */
 .close {
-  background: #606001;
+  background: red;
   color: #FFFFFF;
   line-height: 25px;
   position:absolute;

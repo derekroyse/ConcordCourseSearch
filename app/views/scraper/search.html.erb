@@ -1,167 +1,185 @@
 <% provide(:title, 'Scraper Test') %>
-<h1>Search Results</h1>
 
-<div class="semesters">
-  <%= form_tag :action => 'startup' do %>						  
-  <%= select_tag(:selection, options_for_select([
-    ['Select a Semester', 201501],	  ['Fall Semester 2014', 201501],
-    ['Second Summer Term 2014', 201405 ], ['First Summer Term 2014', 201404],  
-    ['Summer Intersession 2014', 201403], ['Spring Semester 2014', 201402],  
-    ['Fall Semester 2013', 201401], 	  ['Graduate Summer Term 2013', 201306],  
-    ['Second Summer Term 2013', 201305],  ['First Summer Term 2013', 201304], 
-    ['Summer Intersession 2013', 201303], ['Spring Semester 2013', 201302],  
-    ['Fall Semester 2012', 201301],	  ['Full Summer Term 2012', 201207],
-    ['Graduate Summer Term 2012', 201206],['Second Summer Term 2012', 201205], 
-    ['First Summer Term 2012', 201204],   ['Summer Intersession 2012', 201203],
-    ['Spring Semester 2012', 201202],     ['Fall Semester 2011', 201201],  
-    ['Full Summer Term 2011', 201107],	  ['Graduate Summer Term 2011', 201106],  
-    ['Second Summer Term 2011', 201105],  ['First Summer Term 2011', 201104],  
-    ['Summer Intersession 2011', 201103], ['Spring Semester 2011', 201102],  
-    ['Fall Semester 2010', 201101],  	  ['Full Summer Term 2010', 201007], 
-    ['Graduate Summer Term 2010', 201006],['Second Summer Term 2010', 201005],  
-    ['First Summer Term 2010', 201004],   ['Summer Intersession 2010', 201003],  
-    ['Spring Semester 2010', 201002],     ['Fall Semester 2009', 201001],  
-    ['Full Summer Term 2009', 200907],	  ['Graduate Summer Term 2009', 200906],  
-    ['Second Summer Term 2009', 200905],  ['First Summer Term 2009', 200904],  
-    ['Summer Intersession 2009', 200903], ['Spring Semester 2009', 200902], 
-    ['Fall Semester 2008', 200901],	  ['Beckley Summer Term 2008', 200807],  
-    ['Graduate Summer Term 2008', 200806],['Second Summer Term 2008', 200805],  
-    ['First Summer Term 2008', 200804],   ['Summer Intersession 2008', 200803],  
-    ['Spring Semester 2008', 200802],	  ['Fall Semester 2007', 200801], 
-    ['Graduate Summer Term 2007', 200706],['Second Summer Term 2007', 200705],  
-    ['First Summer Term 2007', 200704],   ['Summer Intersession 2007', 200703],  
-    ['Spring Semester 2007', 200702],     ['Fall Semester 2006', 200701],  
-    ['Graduate Summer Term 2006', 200606],['Second Summer Term 2006', 200605],  
-    ['First Summer Term 2006', 200604],   ['Summer Intersession 2006', 200603],  
-    ['Spring Semester 2006', 200602],  	  ['Fall Semester 2005', 200601],  
-    ['Graduate Summer Term 2005', 200506],['Second Summer Term 2005', 200505],  
-    ['First Summer Term 2005', 200504],	  ['Summer Intersession 2005', 200503],  
-    ['Spring Semester 2005', 200502], 	  ['Fall Semester 2004', 200501],  
-    ['Graduate Summer Term 2004', 200406],['Second Summer Term 2004', 200405],  
-    ['First Summer Term 2004', 200404],   ['Summer Intersession 2004', 200403],  
-    ['Spring Semester 2004', 200402],     ['Fall Semester 2003', 200401],  
-    ['Second Summer Term 2003', 200305],  ['First Summer Term 2003', 200304],  
-    ['Summer Intersession 2003', 200303], ['Spring Semester 2003', 200302],  
-    ['Fall Semester 2002', 200301],	  ['Second Summer Term 2002', 200205],  
-    ['First Summer Term 2002', 200204],   ['Summer Intersession 2002', 200203],  
-    ['Spring Semester 2002', 200202],	  ['Fall Semester 2001', 200201],  
-    ['Second Summer Term 2001', 200105],  ['First Summer Term 2001', 200104],  
-    ['Summer Intersession 2001', 200103], ['Spring Semester 2001', 200102],  
-    ['Fall Semester 2000', 200101],  	  ['Second Summer Term 2000', 200005],  
-    ['First Summer Term 2000', 200004],	  ['Summer Intersession 2000', 200003],  
-    ['Spring Semester 2000', 200002],     ['Fall Semester 1999', 200001]]))%>
-    <br>
-    <%= submit_tag "Submit" %>
-  <% end %>
-</div>
-
-<%= link_to image_tag("search_button.png", alt: "Search"), '#openModal' %>
-<div id="openModal" class="modalDialog">
-  <div>
-    <a href="#close" title="Close" class="close">X</a> 
-  <%= form_tag :action => 'search' do %>
-    <div class="search_panel">
-      <!-- CRN (Course Registration Number) -->
-      <%= label_tag(:crn_input, "CRN") %>
-      <%= text_field_tag :crn_input, nil, placeholder:"Course Registration Number" %>
-    </div>
-    <div class="search_panel">
-      <!-- SUBJ (Subject) -->
-      <%= label_tag(:subj_input, "SUBJ") %>
-      <%= text_field_tag :subj_input, nil, placeholder:"Subject" %>
-    </div>
-    <div class="search_panel">
-      <!-- CRS (Course Level Number) -->
-      <%= label_tag(:crs_input, "CRS") %>
-      <%= text_field_tag :crs_input, nil, placeholder:"Course Number" %>
-    </div>
-    <div class="search_panel">
-      <!-- SEC (Section Number) -->
-      <%= label_tag(:sec_input, "SEC") %>
-      <%= text_field_tag :sec_input, nil, placeholder:"Section Number" %>
-    </div>
-    <div class="search_panel">    
-      <!-- TITLE -->
-      <%= label_tag(:title_input, "TITLE") %>
-      <%= text_field_tag :title_input, nil, placeholder:"Title" %>
-    </div>
-    <div class="search_panel">    
-      <!-- CH (Credit Hours) -->
-      <%= label_tag(:ch_input, "CH") %>
-      <%= text_field_tag :ch_input, nil, placeholder:"Credit Hours" %>
-    </div>
-    <div class="search_panel">
-      <!-- MAX (Maximum Seats) -->
-      <%= label_tag(:max_input, "MAX") %>
-      <%= text_field_tag :max_input, nil, placeholder:"Maximum Seats" %>
-    </div>
-    <div class="search_panel">    
-      <!-- ENR (Students Enrolled) -->
-      <%= label_tag(:enr_input, "ENR") %>
-      <%= text_field_tag :enr_input, nil, placeholder:"Students Enrolled" %>
-    </div>
-    <div class="search_panel">    
-      <!-- AVAIL (Seats Available) -->
-      <%= label_tag(:avail_input, "AVAIL") %>
-      <%= text_field_tag :avail_input, nil, placeholder:"Seats Available" %>
-    </div>
-    <div class="search_panel">
-      <!-- WL (Waiting List) -->
-      <%= label_tag(:wl_input, "WL") %>
-      <%= text_field_tag :wl_input, nil, placeholder:"Waiting List" %>
-    </div>
-    <div class="search_panel">    
-      <!-- DAYS (Meeting Days) -->
-      <%= label_tag(:days_input, "DAYS") %>
-      <%= text_field_tag :days_input, nil, placeholder:"Meeting Days" %>
-    </div>
-    <div class="search_panel">    
-      <!-- STIME (Start Time) -->
-      <%= label_tag(:stime_input, "STIME") %>
-      <%= text_field_tag :stime_input, nil, placeholder:"Start Time" %>
-    </div>
-    <div class="search_panel">
-      <!-- ETIME (End Time) -->
-      <%= label_tag(:etime_input, "ETIME") %>
-      <%= text_field_tag :etime_input, nil, placeholder:"End Time" %>
-    </div>
-    <div class="search_panel">    
-      <!-- BLDGROOM (Building/Room) -->
-      <%= label_tag(:bldgroom_input, "BLDG/ROOM") %>
-      <%= text_field_tag :bldgroom_input, nil, placeholder:"Building/Room" %>
-    </div>
-    <div class="search_panel">    
-      <!-- WK (Weeks) -->
-      <%= label_tag(:wk_input, "WK") %>
-      <%= text_field_tag :wk_input, nil, placeholder:"Weeks" %>
-    </div>
-    <div class="search_panel">
-      <!-- INSTRUCTOR (Instructor Name) -->
-      <%= label_tag(:insructor_input, "INSTRUCTOR") %>
-      <%= text_field_tag :instructor_input, nil, placeholder:"Instructor Name" %>
-    </div>
-    <div class="search_panel">    
-      <!-- EF (Estimated Fees) -->
-      <%= label_tag(:ef_input, "EF") %>
-      <%= text_field_tag :ef_input, nil, placeholder:"Estimated Fees" %>
-    </div>
-    <div class="search_panel">    
-      <!-- STARTS ON (Starting Day) -->
-      <%= label_tag(:startson_input, "STARTS ON") %>
-      <%= text_field_tag :startson_input, nil, placeholder:"Starting Day" %>
-    </div>
-      <%= submit_tag("Search") %>
-  <% end %>
+<div class="top"> <!-- Top info pane -->
+  <div class="titles"> <!-- Semester Selection Form -->
+    <h1>Search Results</h1>
   </div>
-</div>
+  <div class="forms">
+    <%= form_tag :action => 'startup' do %>						  
+    <%= select_tag(:selection, options_for_select([
+      ['Select a Semester', 201501],	  ['Fall Semester 2014', 201501],
+      ['Second Summer Term 2014', 201405 ], ['First Summer Term 2014', 201404],  
+      ['Summer Intersession 2014', 201403], ['Spring Semester 2014', 201402],  
+      ['Fall Semester 2013', 201401], 	  ['Graduate Summer Term 2013', 201306],  
+      ['Second Summer Term 2013', 201305],  ['First Summer Term 2013', 201304], 
+      ['Summer Intersession 2013', 201303], ['Spring Semester 2013', 201302],  
+      ['Fall Semester 2012', 201301],	  ['Full Summer Term 2012', 201207],
+      ['Graduate Summer Term 2012', 201206],['Second Summer Term 2012', 201205], 
+      ['First Summer Term 2012', 201204],   ['Summer Intersession 2012', 201203],
+      ['Spring Semester 2012', 201202],     ['Fall Semester 2011', 201201],  
+      ['Full Summer Term 2011', 201107],	  ['Graduate Summer Term 2011', 201106],  
+      ['Second Summer Term 2011', 201105],  ['First Summer Term 2011', 201104],  
+      ['Summer Intersession 2011', 201103], ['Spring Semester 2011', 201102],  
+      ['Fall Semester 2010', 201101],  	  ['Full Summer Term 2010', 201007], 
+      ['Graduate Summer Term 2010', 201006],['Second Summer Term 2010', 201005],  
+      ['First Summer Term 2010', 201004],   ['Summer Intersession 2010', 201003],  
+      ['Spring Semester 2010', 201002],     ['Fall Semester 2009', 201001],  
+      ['Full Summer Term 2009', 200907],	  ['Graduate Summer Term 2009', 200906],  
+      ['Second Summer Term 2009', 200905],  ['First Summer Term 2009', 200904],  
+      ['Summer Intersession 2009', 200903], ['Spring Semester 2009', 200902], 
+      ['Fall Semester 2008', 200901],	  ['Beckley Summer Term 2008', 200807],  
+      ['Graduate Summer Term 2008', 200806],['Second Summer Term 2008', 200805],  
+      ['First Summer Term 2008', 200804],   ['Summer Intersession 2008', 200803],  
+      ['Spring Semester 2008', 200802],	  ['Fall Semester 2007', 200801], 
+      ['Graduate Summer Term 2007', 200706],['Second Summer Term 2007', 200705],  
+      ['First Summer Term 2007', 200704],   ['Summer Intersession 2007', 200703],  
+      ['Spring Semester 2007', 200702],     ['Fall Semester 2006', 200701],  
+      ['Graduate Summer Term 2006', 200606],['Second Summer Term 2006', 200605],  
+      ['First Summer Term 2006', 200604],   ['Summer Intersession 2006', 200603],  
+      ['Spring Semester 2006', 200602],  	  ['Fall Semester 2005', 200601],  
+      ['Graduate Summer Term 2005', 200506],['Second Summer Term 2005', 200505],  
+      ['First Summer Term 2005', 200504],	  ['Summer Intersession 2005', 200503],  
+      ['Spring Semester 2005', 200502], 	  ['Fall Semester 2004', 200501],  
+      ['Graduate Summer Term 2004', 200406],['Second Summer Term 2004', 200405],  
+      ['First Summer Term 2004', 200404],   ['Summer Intersession 2004', 200403],  
+      ['Spring Semester 2004', 200402],     ['Fall Semester 2003', 200401],  
+      ['Second Summer Term 2003', 200305],  ['First Summer Term 2003', 200304],  
+      ['Summer Intersession 2003', 200303], ['Spring Semester 2003', 200302],  
+      ['Fall Semester 2002', 200301],	  ['Second Summer Term 2002', 200205],  
+      ['First Summer Term 2002', 200204],   ['Summer Intersession 2002', 200203],  
+      ['Spring Semester 2002', 200202],	  ['Fall Semester 2001', 200201],  
+      ['Second Summer Term 2001', 200105],  ['First Summer Term 2001', 200104],  
+      ['Summer Intersession 2001', 200103], ['Spring Semester 2001', 200102],  
+      ['Fall Semester 2000', 200101],  	  ['Second Summer Term 2000', 200005],  
+      ['First Summer Term 2000', 200004],	  ['Summer Intersession 2000', 200003],  
+      ['Spring Semester 2000', 200002],     ['Fall Semester 1999', 200001]]))%>						
+      <br>
+      <%= submit_tag "Change Semester" %>
+    <% end %>
+  </div> <!-- Semester Selection Form -->
+  <div class="titles">
+    <h1><%= getSemester(params[:selection]).html_safe %></h1>
+  </div>
+  <div class="forms">
+    <%= link_to image_tag("search.png", alt: "Search"), '#openModal' %>
+    <br>
+    <%= link_to image_tag("codes.png", alt: "Site Codes"), '#openModal' %>
+  </div>
+</div> <!-- top info pane -->
+<div id="openModal" class="modalDialog"> 
+  <div> <!-- Search Box -->
+    <a href="#close" title="Close" class="close">X</a>
+      
+    <%= form_tag :action => 'search' do %> <!-- Search Form -->
+      <div class="search_panel">
+	<!-- CRN (Course Registration Number) -->
+	<%= label_tag(:crn_input, "CRN") %>
+	<%= text_field_tag :crn_input, nil, placeholder:"Course Registration Number" %>
+      </div>
+      <div class="search_panel">
+	<!-- SUBJ (Subject) -->
+	<%= label_tag(:subj_input, "SUBJ") %>
+	<%= text_field_tag :subj_input, nil, placeholder:"Subject" %>
+      </div>
+      <div class="search_panel">
+	<!-- CRS (Course Level Number) -->
+	<%= label_tag(:crs_input, "CRS") %>
+	<%= text_field_tag :crs_input, nil, placeholder:"Course Number" %>
+      </div>
+      <div class="search_panel">
+	<!-- SEC (Section Number) -->
+	<%= label_tag(:sec_input, "SEC") %>
+	<%= text_field_tag :sec_input, nil, placeholder:"Section Number" %>
+      </div>
+      <div class="search_panel">    
+	<!-- TITLE -->
+	<%= label_tag(:title_input, "TITLE") %>
+	<%= text_field_tag :title_input, nil, placeholder:"Title" %>
+      </div>
+      <div class="search_panel">    
+	<!-- CH (Credit Hours) -->
+	<%= label_tag(:ch_input, "CH") %>
+	<%= text_field_tag :ch_input, nil, placeholder:"Credit Hours" %>
+      </div>
+      <div class="search_panel">
+	<!-- MAX (Maximum Seats) -->
+	<%= label_tag(:max_input, "MAX") %>
+	<%= text_field_tag :max_input, nil, placeholder:"Maximum Seats" %>
+      </div>
+      <div class="search_panel">    
+	<!-- ENR (Students Enrolled) -->
+	<%= label_tag(:enr_input, "ENR") %>
+	<%= text_field_tag :enr_input, nil, placeholder:"Students Enrolled" %>
+      </div>
+      <div class="search_panel">    
+	<!-- AVAIL (Seats Available) -->
+	<%= label_tag(:avail_input, "AVAIL") %>
+	<%= text_field_tag :avail_input, nil, placeholder:"Seats Available" %>
+      </div>
+      <div class="search_panel">
+	<!-- WL (Waiting List) -->
+	<%= label_tag(:wl_input, "WL") %>
+	<%= text_field_tag :wl_input, nil, placeholder:"Waiting List" %>
+      </div>
+      <div class="search_panel">    
+	<!-- DAYS (Meeting Days) -->
+	<%= label_tag(:days_input, "DAYS") %>
+	<%= text_field_tag :days_input, nil, placeholder:"Meeting Days" %>
+      </div>
+      <div class="search_panel">    
+	<!-- STIME (Start Time) -->
+	<%= label_tag(:stime_input, "STIME") %>
+	<%= text_field_tag :stime_input, nil, placeholder:"Start Time" %>
+      </div>
+      <div class="search_panel">
+	<!-- ETIME (End Time) -->
+	<%= label_tag(:etime_input, "ETIME") %>
+	<%= text_field_tag :etime_input, nil, placeholder:"End Time" %>
+      </div>
+      <div class="search_panel">    
+	<!-- BLDGROOM (Building/Room) -->
+	<%= label_tag(:bldgroom_input, "BLDG/ROOM") %>
+	<%= text_field_tag :bldgroom_input, nil, placeholder:"Building/Room" %>
+      </div>
+      <div class="search_panel">    
+	<!-- WK (Weeks) -->
+	<%= label_tag(:wk_input, "WK") %>
+	<%= text_field_tag :wk_input, nil, placeholder:"Weeks" %>
+      </div>
+      <div class="search_panel">
+	<!-- INSTRUCTOR (Instructor Name) -->
+	<%= label_tag(:insructor_input, "INSTRUCTOR") %>
+	<%= text_field_tag :instructor_input, nil, placeholder:"Instructor Name" %>
+      </div>
+      <div class="search_panel">    
+	<!-- EF (Estimated Fees) -->
+	<%= label_tag(:ef_input, "EF") %>
+	<%= text_field_tag :ef_input, nil, placeholder:"Estimated Fees" %>
+      </div>
+      <div class="search_panel">    
+	<!-- STARTS ON (Starting Day) -->
+	<%= label_tag(:startson_input, "STARTS ON") %>
+	<%= text_field_tag :startson_input, nil, placeholder:"Starting Day" %>
+      </div>
+      <div>
+	<%= radio_button_tag(:searchType, 0, true) %>
+	<%= label_tag(:search_in, "Inclusive") %>
+	<%= radio_button_tag(:searchType, 1) %>
+	<%= label_tag(:search_ex, "Exclusive") %>
+	<%= submit_tag("Search") %>
+      </div>
+    <% end %> <!-- Search Form -->
+  </div> <!-- Search Box -->
+</div> 
 
-  <%= getSemester(params[:selection]).html_safe %>
+
+  
   <%= search(params[:crn_input], params[:subj_input], params[:crs_input],
 	      params[:sec_input], params[:title_input], params[:ch_input],
 	      params[:max_input], params[:enr_input], params[:avail_input],
 	      params[:wl_input], params[:days_input], params[:stime_input],
 	      params[:etime_input], params[:bldgroom_input], params[:wk_input],
-	      params[:instructor_input], params[:ef_input], params[:startson_input],).html_safe %>
+	      params[:instructor_input], params[:ef_input], params[:startson_input],params[:searchType]).html_safe %>
   <br>
   
   
