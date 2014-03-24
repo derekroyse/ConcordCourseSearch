@@ -55,6 +55,7 @@ module ApplicationHelper
   # Returns content from a scraped page.
   def scrape_site(choice)
     #@@choice = choice
+    @@records = Array.new(18){Array.new}
     i = 0
     j = 0
     x = 0
@@ -114,7 +115,6 @@ module ApplicationHelper
   end # end scrape_site
   
   def search(crn, subj, crs, sec, title, ch, max, enr, avail, wl, days, stime, etime, bldgroom, wk, instructor, ef, starts, searchType)
-
      x = 0
      formatted_headers = "<table><tr class='table_header'>"
          for element in @@headers
@@ -155,24 +155,24 @@ module ApplicationHelper
       while x < @@numRecords
 	# Test each record to see if the appropriate column
 	# matches the search request (as long as the request is not nil)
-	if  @@records[x][0] == crn || crn.inspect == "\"\"" &&
-	    @@records[x][1].downcase.index(subj.downcase) != nil || subj.inspect == "\"\"" &&
-	    @@records[x][2].downcase.index(crs.downcase) != nil || crs.inspect == "\"\"" && 
-	    @@records[x][3].downcase.index(sec.downcase) != nil || sec.inspect == "\"\"" &&
-	    @@records[x][4].downcase.index(title.downcase) != nil || title.inspect == "\"\"" && 
-	    @@records[x][5] == ch || ch.inspect == "\"\"" &&
-	    @@records[x][6] == max || max.inspect == "\"\"" &&
-	    @@records[x][7] == enr || enr.inspect == "\"\"" &&
-	    @@records[x][8] == avail || avail.inspect == "\"\"" &&
-	    @@records[x][9] == wl || wl.inspect == "\"\"" &&
-	    @@records[x][10].downcase.index(days.downcase) != nil || days.inspect == "\"\"" &&
-	    @@records[x][11].downcase.index(stime.downcase) != nil || stime.inspect == "\"\"" &&
-	    @@records[x][12].downcase.index(etime.downcase) != nil || etime.inspect == "\"\"" &&
-	    @@records[x][13].downcase.index(bldgroom.downcase) != nil || bldgroom.inspect == "\"\"" &&
-	    @@records[x][14].downcase.index(wk.downcase) != nil || wk.inspect == "\"\"" &&
-	    @@records[x][15].downcase.index(instructor.downcase) != nil || instructor.inspect == "\"\"" &&
-	    @@records[x][16].downcase.index(ef.downcase) != nil || ef.inspect == "\"\"" &&
-	    @@records[x][17].downcase.index(starts.downcase) != nil || starts.inspect == "\"\""
+	if  (@@records[x][0] == crn || crn.inspect == "\"\"") &&
+	    (@@records[x][1].downcase.index(subj.downcase) != nil || subj.inspect == "\"\"") &&
+	    (@@records[x][2].downcase.index(crs.downcase) != nil || crs.inspect == "\"\"") && 
+	    (@@records[x][3].downcase.index(sec.downcase) != nil || sec.inspect == "\"\"") &&
+	    (@@records[x][4].downcase.index(title.downcase) != nil || title.inspect == "\"\"") && 
+	    (@@records[x][5] == ch || ch.inspect == "\"\"") &&
+	    (@@records[x][6] == max || max.inspect == "\"\"") &&
+	    (@@records[x][7] == enr || enr.inspect == "\"\"") &&
+	    (@@records[x][8] == avail || avail.inspect == "\"\"") &&
+	    (@@records[x][9] == wl || wl.inspect == "\"\"") &&
+	    (@@records[x][10].downcase.index(days.downcase) != nil || days.inspect == "\"\"") &&
+	    (@@records[x][11].downcase.index(stime.downcase) != nil || stime.inspect == "\"\"") &&
+	    (@@records[x][12].downcase.index(etime.downcase) != nil || etime.inspect == "\"\"") &&
+	    (@@records[x][13].downcase.index(bldgroom.downcase) != nil || bldgroom.inspect == "\"\"") &&
+	    (@@records[x][14].downcase.index(wk.downcase) != nil || wk.inspect == "\"\"") &&
+	    (@@records[x][15].downcase.index(instructor.downcase) != nil || instructor.inspect == "\"\"") &&
+	    (@@records[x][16].downcase.index(ef.downcase) != nil || ef.inspect == "\"\"") &&
+	    (@@records[x][17].downcase.index(starts.downcase) != nil || starts.inspect == "\"\"")
 	  formatted_records += "<tr>"
 	    for column in @@records[x]
 	      formatted_records += "<td>"+ column + "</td>"
