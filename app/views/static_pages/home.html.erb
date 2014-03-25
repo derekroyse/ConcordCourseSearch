@@ -2,13 +2,13 @@
   <%= image_tag("concord.png", alt: "Concord University") %>
   <br>
   <br>
-  <%= link_to "View List of Courses", "#openModal", class: "btn btn-large btn-primary", onclick:"window.open('/startup', '_self');" %>
+  <%= link_to "View List of Courses", "#loadingModal", class: "btn btn-large btn-primary", onclick:"window.open('/startup', '_self');" %>
 </div>
 
-<div id="openModal" class="modalDialog"> 
-  <div class = "loadingModal">
+<div id="loadingModal" class="loadingDialog"> 
+  <div>
     <a href="#close" title="Close" class="close">X</a>
 	<h1>Loading</h1>
-	<%= image_tag("loading.gif", alt: "Loading Classes...") %>
+	<%= image_tag("loading.gif", alt: "Loading Classes...", class:"img100x100") %>
   </div>
 </div>

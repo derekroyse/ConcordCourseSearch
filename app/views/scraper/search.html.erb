@@ -6,53 +6,7 @@
   </div>
   <div class="forms">
     <%= form_tag :action => 'startup' do %>						  
-    <%= select_tag(:selection, options_for_select([
-      ['Select a Semester', 201501],	  ['Fall Semester 2014', 201501],
-      ['Second Summer Term 2014', 201405 ], ['First Summer Term 2014', 201404],  
-      ['Summer Intersession 2014', 201403], ['Spring Semester 2014', 201402],  
-      ['Fall Semester 2013', 201401], 	  ['Graduate Summer Term 2013', 201306],  
-      ['Second Summer Term 2013', 201305],  ['First Summer Term 2013', 201304], 
-      ['Summer Intersession 2013', 201303], ['Spring Semester 2013', 201302],  
-      ['Fall Semester 2012', 201301],	  ['Full Summer Term 2012', 201207],
-      ['Graduate Summer Term 2012', 201206],['Second Summer Term 2012', 201205], 
-      ['First Summer Term 2012', 201204],   ['Summer Intersession 2012', 201203],
-      ['Spring Semester 2012', 201202],     ['Fall Semester 2011', 201201],  
-      ['Full Summer Term 2011', 201107],	  ['Graduate Summer Term 2011', 201106],  
-      ['Second Summer Term 2011', 201105],  ['First Summer Term 2011', 201104],  
-      ['Summer Intersession 2011', 201103], ['Spring Semester 2011', 201102],  
-      ['Fall Semester 2010', 201101],  	  ['Full Summer Term 2010', 201007], 
-      ['Graduate Summer Term 2010', 201006],['Second Summer Term 2010', 201005],  
-      ['First Summer Term 2010', 201004],   ['Summer Intersession 2010', 201003],  
-      ['Spring Semester 2010', 201002],     ['Fall Semester 2009', 201001],  
-      ['Full Summer Term 2009', 200907],	  ['Graduate Summer Term 2009', 200906],  
-      ['Second Summer Term 2009', 200905],  ['First Summer Term 2009', 200904],  
-      ['Summer Intersession 2009', 200903], ['Spring Semester 2009', 200902], 
-      ['Fall Semester 2008', 200901],	  ['Beckley Summer Term 2008', 200807],  
-      ['Graduate Summer Term 2008', 200806],['Second Summer Term 2008', 200805],  
-      ['First Summer Term 2008', 200804],   ['Summer Intersession 2008', 200803],  
-      ['Spring Semester 2008', 200802],	  ['Fall Semester 2007', 200801], 
-      ['Graduate Summer Term 2007', 200706],['Second Summer Term 2007', 200705],  
-      ['First Summer Term 2007', 200704],   ['Summer Intersession 2007', 200703],  
-      ['Spring Semester 2007', 200702],     ['Fall Semester 2006', 200701],  
-      ['Graduate Summer Term 2006', 200606],['Second Summer Term 2006', 200605],  
-      ['First Summer Term 2006', 200604],   ['Summer Intersession 2006', 200603],  
-      ['Spring Semester 2006', 200602],  	  ['Fall Semester 2005', 200601],  
-      ['Graduate Summer Term 2005', 200506],['Second Summer Term 2005', 200505],  
-      ['First Summer Term 2005', 200504],	  ['Summer Intersession 2005', 200503],  
-      ['Spring Semester 2005', 200502], 	  ['Fall Semester 2004', 200501],  
-      ['Graduate Summer Term 2004', 200406],['Second Summer Term 2004', 200405],  
-      ['First Summer Term 2004', 200404],   ['Summer Intersession 2004', 200403],  
-      ['Spring Semester 2004', 200402],     ['Fall Semester 2003', 200401],  
-      ['Second Summer Term 2003', 200305],  ['First Summer Term 2003', 200304],  
-      ['Summer Intersession 2003', 200303], ['Spring Semester 2003', 200302],  
-      ['Fall Semester 2002', 200301],	  ['Second Summer Term 2002', 200205],  
-      ['First Summer Term 2002', 200204],   ['Summer Intersession 2002', 200203],  
-      ['Spring Semester 2002', 200202],	  ['Fall Semester 2001', 200201],  
-      ['Second Summer Term 2001', 200105],  ['First Summer Term 2001', 200104],  
-      ['Summer Intersession 2001', 200103], ['Spring Semester 2001', 200102],  
-      ['Fall Semester 2000', 200101],  	  ['Second Summer Term 2000', 200005],  
-      ['First Summer Term 2000', 200004],	  ['Summer Intersession 2000', 200003],  
-      ['Spring Semester 2000', 200002],     ['Fall Semester 1999', 200001]]))%>						
+    <%= select_tag(:selection, options_for_select(getSemesterArray()))%>						
       <br>
       <%= submit_tag "Change Semester" %>
     <% end %>
@@ -61,14 +15,16 @@
     <h1><%= getSemester(params[:selection]).html_safe %></h1>
   </div>
   <div class="forms">
-    <%= link_to image_tag("search.png", alt: "Search"), '#openModal' %>
+    <%= link_to image_tag("search.png", alt: "Search"), '#searchModal' %>
     <br>
-    <%= link_to image_tag("codes.png", alt: "Site Codes"), '#openModal' %>
+    <%= link_to image_tag("codes.png", alt: "Site Codes"), '#codesModal' %>
   </div>
 </div> <!-- top info pane -->
-<div id="openModal" class="modalDialog"> 
+<div id="searchModal" class="searchDialog"> 
   <div> <!-- Search Box -->
     <a href="#close" title="Close" class="close">X</a>
+    
+    
       
     <%= form_tag :action => 'search' do %> <!-- Search Form -->
       <div class="search_panel">
@@ -164,7 +120,7 @@
       <div class="clearLeft">
 	<%= radio_button_tag(:searchType, 0, true, class:"displayInline") %>
 	<%= label_tag(:search_in, "Inclusive", class:"displayInline") %>
-	<%= radio_button_tag(:searchType, 1, class:"displayInline") %>
+	<%= radio_button_tag(:searchType, 1, false, class:"displayInline") %>
 	<%= label_tag(:search_ex, "Exclusive", class:"displayInline") %>
 	<br>
 	<%= submit_tag("Search", class:"clearLeft") %>
@@ -172,6 +128,61 @@
     <% end %> <!-- Search Form -->
   </div> <!-- Search Box -->
 </div> 
+
+<div id="codesModal" class="codesDialog"> 
+  <div>
+    <a href="#close" title="Close" class="close">X</a>
+    <div class="helpPanel">
+    <h3>Section Number Codes</h3>
+    <ul>
+      <li>Section 01-19 - University Campus Day Classes</li>
+      <li>Section 20-29 - Night Classes taught on the university campus (start 4:00 pm or later)</li>
+      <li>Section 30-39 - Off Campus Classes</li>
+      <li>Section 80-89 - Shared Courses with Bluefield State College at Beckley HEC</li>
+      <li>Section 1V, 2V, etc. - Video Conferencing Classes</li>
+      <li>Section 1AS, 2AS, etc. - Asynchronous Web Based (access all times within scheduled dates)</li>
+      <li>Section 1SY, 2SY, etc. - Synchronous Web Based (specific class times)</li>
+      <li>Section 1HW, 2HW, etc. - Hybrid Web (class meeting MAY be required)</li>
+    </ul>
+  </div>
+    <div class="helpPanel">
+  <h3>Building Codes</h3>
+  <ul>
+    <li>CARTER - Carter Center</li>
+    <li>FINART - Fine Arts Center</li>
+    <li>LIBRARY - Marsh Library</li>
+    <li>MARSH - Marsh Hall (Administration Building)</li>
+    <li>RAHALL - Rahall Technology Center</li>
+    <li>SCIEN - Science Building</li>
+    <li>STUCTR - Student Center</li>
+    <li>DSTU - Dance Studio</li>
+  </ul>
+  </div>
+    <div class="helpPanel clearLeft">
+  <h3>Campus Codes</h3>
+  <ul>
+    <li>ATHENS - Athens</li>
+    <li>BECKLY - HEC - Beckley Higher Education Center</li>
+    <li>LEWISB - Lewisburg</li>
+    <li>PIKEVI - Pikeview</li>
+    <li>PCTN - Princeton</li>
+    <li>SHADYS - Shady Spring</li>
+  </ul>
+  </div>
+    <div class="helpPanel">
+  <h3>Fees</h3>
+  (Contact Business Office for Current Fee Rates)
+  <ul>
+    <li>T = Technical Fee</li>
+    <li>L = Lab Fee</li>
+    <li>C = Clay</li>
+    <li>TU = Tutorial Fee</li>
+    <li>AT = ATSF Fee</li>
+    <li>DS = DSTF</li>    
+  </ul>
+  </div>
+</div>
+</div>
 
   
   <%= search(params[:crn_input], params[:subj_input], params[:crs_input],
