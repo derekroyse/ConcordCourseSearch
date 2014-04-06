@@ -6,6 +6,7 @@ gem 'rails', '4.0.2'
 gem 'bootstrap-sass', '2.3.2.0'
 gem 'nokogiri', '1.6.1'
 gem 'mechanize', '2.7.2'
+gem 'rufus-scheduler', '3.0.2'
 
 group :development, :test do
   gem 'sqlite3', '1.3.8'

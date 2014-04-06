@@ -59,6 +59,82 @@ module ApplicationHelper
     return @@semesterArray
   end
   
+  def dbTest()
+
+      begin  
+	db = SQLite3::Database.new 'scraped.db'
+	#db.execute "CREATE TABLE IF NOT EXISTS classes(CRN INTEGER PRIMARY KEY, SUBJ TEXT, 
+	#CRS INT, SEC TEXT, TITLE TEXT, CH INT, MAX INT, ENR INT, AVAIL INT, WL INT, DAYS TEXT,
+	#STIME INT, ETIME INT, ROOM TEXT, WK INT, INSTRUCTOR TEXT, EF TEXT, STARTSON TEXT);"
+	#db.execute "INSERT OR IGNORE INTO classes VALUES(00001,'CS',101,'1AS','Introduction to Computers',3,20,15,5,0,'MWF',
+	#1300,1600,'SCIEN (102)',16,'Derek Royse','L, T','18-Aug-2014');"
+	#db.execute "INSERT OR IGNORE INTO classes VALUES(00002,'CS',101,'1AS','Introduction to Computers',3,20,15,5,0,'MWF',
+	#1300,1600,'SCIEN (102)',16,'Stephen Hawking','L, T','18-Aug-2014');"
+	stm = db.execute "SELECT * FROM classes"
+      
+      
+      
+      
+      rescue
+	test = "error"
+      end
+      
+      # Create HTML formatted string from records
+      test = "<table><tr>"
+      i = 0
+      j = 0
+      while i < 2
+	while j < 18
+	  test += "<td>" + stm[i][j].to_s + "</td>"
+	  j+=1
+	end
+	i+=1
+	j=0
+	test += "</tr><tr>"
+      end
+      
+      test += "</table>"
+     
+      # Add HTML formatting to records
+      counter = 0
+      formatted_records = "<table>"
+      #rs.each_with_index do |row|
+	#formatted_records += "<tr>"
+	#row.each_with_index do |column|
+	#  formatted_records += "<td>"+ column + "</td>"
+	#end
+	#formatted_records += "</tr>"
+	#counter += 1
+	#if counter % @@recordsPerTable == 0
+	#  formatted_records = formatted_records + formatted_headers
+	#end
+      #end
+      #formatted_records += "</table>"
+      
+    rescue SQLite3::Exception => e
+      puts "Exception occured"
+      puts e
+      
+    ensure
+      db.close if db
+      
+    return test
+  end
+  
+  def updateDB()
+    
+    begin
+      db = SQLite3::Database.new 'scraped.db'
+
+    rescue SQLite3::Exception => e
+      puts "Exception occured"
+      puts e
+      
+    ensure
+      db.close if db
+    end
+  end
+  
   # Return a formatted semester string
   def getSemester(choice)
     # Clear variables    
@@ -115,7 +191,7 @@ module ApplicationHelper
 	# Clear the array
     @@records = Array.new(18){Array.new}
     # Loop variables
-	i = 0
+    i = 0
     j = 0
     x = 0
     y = 0
