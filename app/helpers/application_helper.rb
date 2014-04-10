@@ -71,12 +71,12 @@ module ApplicationHelper
 	#db.execute "INSERT OR IGNORE INTO classes VALUES(00002,'CS',101,'1AS','Introduction to Computers',3,20,15,5,0,'MWF',
 	#1300,1600,'SCIEN (102)',16,'Stephen Hawking','L, T','18-Aug-2014');"
 	stm = db.execute "SELECT * FROM classes"
-      
-      
-      
-      
+      rescue SQLite3::Exception => e
+	test = "Exception occured" + e
       rescue
 	test = "error"
+      ensure
+	db.close if db
       end
       
       # Create HTML formatted string from records
@@ -111,28 +111,99 @@ module ApplicationHelper
       #end
       #formatted_records += "</table>"
       
-    rescue SQLite3::Exception => e
-      puts "Exception occured"
-      puts e
-      
-    ensure
-      db.close if db
-      
     return test
   end
   
   def updateDB()
+    # Loop variables
+    i = 0
+    j = 0
+    x = 0
+    y = 0
+    tableName = ""
+	
+    # Setup the target website
+    agent = Mechanize.new
+    data = agent.get('https://apps.concord.edu/schedules/seatstaken.php')
+    select_list = data.form_with(:action => '/schedules/seatstaken.php')
     
     begin
       db = SQLite3::Database.new 'scraped.db'
+      # Create a new table for each semester.
+      # Might need to drop tables here.
+      test = "success"
+	@@semesterArray.each do |semester|
+	  i = 0
+	  headers = Array.new(18)
+	  records = Array.new(18){Array.new}
+	  numrecords = 0
+	  
+	  tableName = "semester" + semester[1].to_s
+	  db.execute "CREATE TABLE IF NOT EXISTS " + tableName + "(CRN INTEGER PRIMARY KEY, SUBJ TEXT, 
+	    CRS INT, SEC TEXT, TITLE TEXT, CH INT, MAX INT, ENR INT, AVAIL INT, WL INT, DAYS TEXT,
+	    STIME INT, ETIME INT, ROOM TEXT, WK INT, INSTRUCTOR TEXT, EF TEXT, STARTSON TEXT);"
+	  #stm = db.execute "SELECT * FROM " + tableName
+	  #test = stm[0][1].to_s
+	    
+	  # Grab raw data from website (with the selected semester)
+	  select_list.field_with(:name =>"term").value = semester[1]
+	  data = agent.submit(select_list)
+	  rows = data.search("td")
+	  numRecords = (rows.length/18)-(rows.length/900)-1
+	  test = tableName
+
+	  # Temporary array.
+#	  while i < rows.length
+#	    if i < 18
+#	      headers[i] = rows[i].text
+#	      i+=1
+#	    elsif i % 918 <= 17
+#	      i+=1
+#	    else
+#	      while y < 18
+#		(records[x] ||= [])[y] = rows[i].text
+#		y+=1
+#		i+=1
+#	      end #end while
+#	      x+=1
+#	      y=0
+#	    end # end if
+#	  end # end while
+	     
+	  # Create records in each table
+#	  records.each do |row|
+#	    db.execute "INSERT OR IGNORE INTO " + tableName + " VALUES(" + 
+#	      row[0].to_i + "," + 
+#	      row[1] + "," + 
+#	      row[2].to_i + "," + 
+#	      row[3] + "," + 
+#	      row[4] + "," + 
+#	      row[5].to_i + "," + 
+#	      row[6].to_i + "," + 
+#	      row[7].to_i + "," + 
+#	      row[8].to_i + "," + 
+#	      row[9].to_i + "," +  
+#	      row[10] + "," + 
+#	      row[11].to_i + "," + 
+#	      row[12].to_i + "," + 
+#	      row[13] + "," + 
+#	      row[14].to_i + "," + 
+#	      row[15] + "," +  
+#	      row[16] + "," + 
+#	      row[17] + ");"
+#	  end
+	end
 
     rescue SQLite3::Exception => e
-      puts "Exception occured"
-      puts e
-      
+      test = "Exception occured"
+      return e
+    rescue
+      test = "error"
     ensure
       db.close if db
     end
+    
+    return test
   end
   
   # Return a formatted semester string
@@ -196,7 +267,7 @@ module ApplicationHelper
     x = 0
     y = 0
 	
-	# Setup the target website
+    # Setup the target website
     agent = Mechanize.new
     data = agent.get('https://apps.concord.edu/schedules/seatstaken.php')
     select_list = data.form_with(:action => '/schedules/seatstaken.php')
