@@ -178,7 +178,7 @@ DEPENDENCIES
   jquery-rails (= 3.0.4)
   mechanize (= 2.7.2)
   nokogiri (= 1.6.1)
-  pg (= 0.15.1)
+  pg
   rails (= 4.0.2)
   rails_12factor (= 0.0.2)
   rspec-rails (= 2.13.1)
