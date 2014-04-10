@@ -32,4 +32,5 @@ end
 group :production, :staging do
   gem 'pg'
   gem 'rails_12factor', '0.0.2'
+  gem 'activerecord-postgresql-adapter'
 end
