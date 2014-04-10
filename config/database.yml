@@ -20,9 +20,9 @@ test:
 
 production:
   adapter: postgresql
-  database: mission
+  database: ddhgpvl3uej8l4
   pool: 5
   timeout: 5000
-  username: username
-  password: password
-  host: localhost
+  username: rvgjhnbwyakcyu
+  password: yiFtCflU2rsznsPmvLNcGly9PV
+  host: ec2-107-21-100-118.compute-1.amazonaws.com
