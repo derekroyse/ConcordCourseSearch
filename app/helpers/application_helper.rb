@@ -128,7 +128,7 @@ module ApplicationHelper
     select_list = data.form_with(:action => '/schedules/seatstaken.php')
     
     begin
-      db = SQLite3::Database.new 'scraped.db'
+      db = SQLite3::Database.new 'db/development.sqlite3'
       # Create a new table for each semester.
       # Might need to drop tables here.
       test = "success"

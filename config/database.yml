@@ -5,7 +5,7 @@
 #   gem 'sqlite3'
 development:
   adapter: sqlite3
-  database: scraped.db
+  database: db/development.sqlite3
   pool: 5
   timeout: 5000
 
@@ -20,6 +20,9 @@ test:
 
 production:
   adapter: postgresql
-  database: HEROKU_POSTGRESQL_JADE_URL
+  database: mission
   pool: 5
   timeout: 5000
+  username: username
+  password: password
+  host: localhost
