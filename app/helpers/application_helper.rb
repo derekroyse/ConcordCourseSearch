@@ -7,6 +7,7 @@ module ApplicationHelper
   @@numRecords = 0
   @@nilReturn = "\"\""
   @@recordsPerTable = 40
+  @@tinyArray = ['Fall Semester 2014', 201501]
   @@semesterArray = [
       ['Select a Semester', 201501],	  ['Fall Semester 2014', 201501],
       ['Second Summer Term 2014', 201405 ], ['First Summer Term 2014', 201404],  
@@ -121,6 +122,8 @@ module ApplicationHelper
     x = 0
     y = 0
     tableName = ""
+    
+    @@records = Array.new(18){Array.new}
 	
     # Setup the target website
     agent = Mechanize.new
@@ -128,77 +131,90 @@ module ApplicationHelper
     select_list = data.form_with(:action => '/schedules/seatstaken.php')
     
     begin
-      db = SQLite3::Database.new 'db/development.sqlite3'
+      db = PG::Connection.open(:dbname => 'scrape_development')
       # Create a new table for each semester.
       # Might need to drop tables here.
       test = "success"
-	@@semesterArray.each do |semester|
+      
+	@@tinyArray.each do |semester|
 	  i = 0
 	  headers = Array.new(18)
-	  records = Array.new(18){Array.new}
-	  numrecords = 0
 	  
-	  tableName = "semester" + semester[1].to_s
-	  db.execute "CREATE TABLE IF NOT EXISTS " + tableName + "(CRN INTEGER PRIMARY KEY, SUBJ TEXT, 
+	  numrecords = 0
+  
+	  tableName = "semester" + "201501"
+	  db.exec_params("CREATE TABLE IF NOT EXISTS " + tableName + "(CRN INTEGER PRIMARY KEY, SUBJ TEXT, 
 	    CRS INT, SEC TEXT, TITLE TEXT, CH INT, MAX INT, ENR INT, AVAIL INT, WL INT, DAYS TEXT,
-	    STIME INT, ETIME INT, ROOM TEXT, WK INT, INSTRUCTOR TEXT, EF TEXT, STARTSON TEXT);"
-	  #stm = db.execute "SELECT * FROM " + tableName
-	  #test = stm[0][1].to_s
+	    STIME INT, ETIME INT, ROOM TEXT, WK INT, INSTRUCTOR TEXT, EF TEXT, STARTSON TEXT);")
 	    
 	  # Grab raw data from website (with the selected semester)
-	  select_list.field_with(:name =>"term").value = semester[1]
+	  select_list.field_with(:name =>"term").value = 201501
 	  data = agent.submit(select_list)
 	  rows = data.search("td")
 	  numRecords = (rows.length/18)-(rows.length/900)-1
-	  test = tableName
-
+	  
 	  # Temporary array.
-#	  while i < rows.length
-#	    if i < 18
-#	      headers[i] = rows[i].text
-#	      i+=1
-#	    elsif i % 918 <= 17
-#	      i+=1
-#	    else
-#	      while y < 18
-#		(records[x] ||= [])[y] = rows[i].text
-#		y+=1
-#		i+=1
-#	      end #end while
-#	      x+=1
-#	      y=0
-#	    end # end if
-#	  end # end while
-	     
+	  while i < rows.length
+	    if i < 18
+	      headers[i] = rows[i].text
+	      i+=1
+	    elsif i % 918 <= 17
+	      i+=1
+	    else
+	      while y < 18
+		(@@records[x] ||= [])[y] = rows[i].text
+		y+=1
+		i+=1
+	      end #end while
+	      x+=1
+	      y=0
+	    end # end if
+	  end # end while
+	  
 	  # Create records in each table
-#	  records.each do |row|
-#	    db.execute "INSERT OR IGNORE INTO " + tableName + " VALUES(" + 
-#	      row[0].to_i + "," + 
-#	      row[1] + "," + 
-#	      row[2].to_i + "," + 
-#	      row[3] + "," + 
-#	      row[4] + "," + 
-#	      row[5].to_i + "," + 
-#	      row[6].to_i + "," + 
-#	      row[7].to_i + "," + 
-#	      row[8].to_i + "," + 
-#	      row[9].to_i + "," +  
-#	      row[10] + "," + 
-#	      row[11].to_i + "," + 
-#	      row[12].to_i + "," + 
-#	      row[13] + "," + 
-#	      row[14].to_i + "," + 
-#	      row[15] + "," +  
-#	      row[16] + "," + 
-#	      row[17] + ");"
-#	  end
+	/  @@records.each do |row|
+	    insertString = "INSERT INTO " + tableName + " VALUES(" + 
+	      row[0] + ",'" + 
+	      row[1] + "'," + 
+	      row[2] + ",'" + 
+	      row[3] + "','" + 
+	      row[4] + "'," + 
+	      row[5] + "," + 
+	      row[6] + "," + 
+	      row[7] + "," + 
+	      row[8] + "," + 
+	      row[9] + ",'" +  
+	      row[10] + "'," + 
+	      row[11] + "," + 
+	      row[12] + ",'" + 
+	      row[13] + "'," + 
+	      row[14] + ",'" + 
+	      row[15] + "','" +  
+	      row[16] + "','" + 
+	      row[17] + "');"
+	    test = insertString
+	   db.exec(insertString)
+	  end/
+    
+    test = "<table>"
+    stm = db.exec('SELECT * FROM semester201501') 
+      stm.each do |row|
+	row.each do |column|
+	test += "<tr>"
+	  column.each do |field|
+	    test+= "<td>" + field + "</td>"
+	  end
+	  test += "</tr>"
 	end
-
-    rescue SQLite3::Exception => e
-      test = "Exception occured"
-      return e
-    rescue
-      test = "error"
+      end
+	end
+    test += "</table>"
+	
+    #rescue PG::Error => e
+     # test = "Exception occured"
+      #return e
+#    rescue
+      #test = "error"
     ensure
       db.close if db
     end

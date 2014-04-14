@@ -7,9 +7,9 @@ gem 'bootstrap-sass', '2.3.2.0'
 gem 'nokogiri', '1.6.1'
 gem 'mechanize', '2.7.2'
 gem 'rufus-scheduler', '3.0.2'
+gem 'pg'
 
-group :development, :test do
-  gem 'sqlite3', '1.3.8'
+group :development do
   gem 'rspec-rails', '2.13.1'
 end
 
@@ -29,8 +29,6 @@ group :doc do
   gem 'sdoc', '0.3.20', require: false
 end
 
-group :production, :staging do
-  gem 'pg'
+group :production do
   gem 'rails_12factor', '0.0.2'
-  gem 'activerecord-postgresql-adapter'
 end
