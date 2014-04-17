@@ -8,7 +8,7 @@
     <%= form_tag :action => 'startup' do %>						  
     <%= select_tag(:selection, options_for_select(getSemesterArray()))%>						
       <br>
-      <%= submit_tag "Change Semester" , onclick:"window.open('#loadingModal', '_self');" %>
+      <%= submit_tag "Change Semester" %>
     <% end %>
   </div> <!-- Semester Selection Form -->
   <div class="titles">
@@ -182,14 +182,6 @@
   </ul>
   </div>
 </div>
-</div>
-
-<div id="loadingModal" class="loadingDialog"> 
-  <div>
-    <a href="#close" title="Close" class="close">X</a>
-	<h1>Loading</h1>
-	<%= image_tag("loading.gif", alt: "Loading Classes...", class:"img100x100") %>
-  </div>
 </div>
 
   
