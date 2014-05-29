@@ -8,6 +8,9 @@ gem 'nokogiri', '1.6.1'
 gem 'mechanize', '2.7.2'
 gem 'rufus-scheduler', '3.0.2'
 gem 'pg'
+gem 'mysql'
+gem 'sqlite3'
+gem 'sprockets', '2.11.0'
 
 group :development do
   gem 'rspec-rails', '2.13.1'
