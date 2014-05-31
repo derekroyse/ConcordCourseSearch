@@ -6,7 +6,8 @@ module ApplicationHelper
   @@records = Array.new(18){Array.new}
   @@numRecords = 0
   @@nilReturn = "\"\""
-  @@recordsPerTable = 40
+  @@recordsPerTable = 54
+  @@tinyArray = ['Select a Semester', 201501]
   @@semesterArray = [
       ['Select a Semester', 201501],	  ['Fall Semester 2014', 201501],
       ['Second Summer Term 2014', 201405 ], ['First Summer Term 2014', 201404],  
@@ -119,36 +120,47 @@ module ApplicationHelper
     j = 0
     x = 0
     y = 0
+    z = 0
 	
     # Setup the target website
     agent = Mechanize.new
+    agent.read_timeout=60
     data = agent.get('https://apps.concord.edu/schedules/seatstaken.php')
     select_list = data.form_with(:action => '/schedules/seatstaken.php')
  
-	# The choice value is nil, enter a default value, otherwise use the user's choice
+    # The choice value is nil, enter a default value, otherwise use the user's choice
     if @@choice.inspect == "nil"
       select_list.field_with(:name =>"term").value = 201501
     else
       select_list.field_with(:name =>"term").value = @@choice
     end
     
-	# Grab raw data from website (with the selected semester)
+    # Grab raw data from website (with the selected semester)
     data = agent.submit(select_list)
     rows = data.search("td")
     @@numRecords = (rows.length/18)-(rows.length/900)-1
     
     # Populate headers and row arrays.
-	# The first 17 values are headers. Subsequent sets of 17 values each create records.
-	# Every 918 values (17 columns * 54 rows) the headers repeat, and so are ignored.
+    # The first 28 (0-27) values are from the info table.
+    # The next 17 (28-45) values are headers. Subsequent sets of 17 values each create records.
+    # Every 1000 values (18 columns * 54 rows, offset by the initial 28 info table cells) 
+    # the headers repeat, and so are ignored.
     while i < rows.length
-      if i < 18
-	@@headers[i] = rows[i].text
+      if i > 27 && i < 46
+	@@headers[z] = rows[i].text
 	i+=1
-      elsif i % 918 <= 17
+	z+=1
+      elsif i < 28
+	i+=1
+      elsif (i-28) % 918 <= 17
 	i+=1
       else
 	while y < 18
-	  (@@records[x] ||= [])[y] = rows[i].text
+	  if rows[i] != nil
+	    (@@records[x] ||= [])[y] = rows[i].text
+	  else
+	    (@@records[x] ||= [])[y] = "ERROR"
+	  end
 	  y+=1
 	  i+=1
 	end #end while
