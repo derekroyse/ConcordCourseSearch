@@ -10,3 +10,6 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+# Ignore database.yml so nobody can steal my database password.
+config/database.yml
