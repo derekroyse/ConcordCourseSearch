@@ -1,8 +1,12 @@
 module ApplicationHelper
+  require 'mysql'
+  
   # Class variables
+  @@test = "working"
   @@semesterString = ""
   @@choice = 201501
   @@headers = Array.new(18)
+  @@conversion = Array.new(18)
   @@records = Array.new(18){Array.new}
   @@numRecords = 0
   @@nilReturn = "\"\""
@@ -109,6 +113,108 @@ module ApplicationHelper
       "#{base_title} | #{page_title}"
     end
   end # end full_title
+  
+  def get_data()
+    #@@choice = choice
+    # Clear the array
+    @@records = Array.new(18){Array.new}
+    # Loop variables
+    i = 0
+    j = 0
+    x = 0
+    y = 0
+    z = 0
+
+    # Setup the target website
+    agent = Mechanize.new
+    agent.read_timeout=60
+    data = agent.get('https://apps.concord.edu/schedules/seatstaken.php')
+    select_list = data.form_with(:action => '/schedules/seatstaken.php')
+ 
+    # The choice value is nil, enter a default value, otherwise use the user's choice
+    if @@choice.inspect == "nil"
+      select_list.field_with(:name =>"term").value = 201501
+    else
+      select_list.field_with(:name =>"term").value = @@choice
+    end
+    
+    # Grab raw data from website (with the selected semester)
+    data = agent.submit(select_list)
+    rows = data.search("td")
+    @@numRecords = (rows.length/18)-(rows.length/900)-1
+    
+      dbconfig = YAML::load(File.open('config/database.yml'))
+      connection = Mysql2::Client.new(:host => dbconfig['hostname'], :username => dbconfig['username'], 
+                                      :password => dbconfig['password'], :database => dbconfig['database'])
+      connection.query("DROP TABLE SEMESTER201501")
+      connection.query("CREATE TABLE IF NOT EXISTS \ SEMESTER201501(
+                      CRN INT PRIMARY KEY, SUBJ VARCHAR(5), CRS VARCHAR(5),	
+                      SEC VARCHAR(5), TITLE VARCHAR(50), CH INT,	
+                      MAX INT, ENR INT, AVAIL INT, WL INT, DAYS VARCHAR(10), 
+                      STIME VARCHAR(5), ETIME VARCHAR(5), ROOM VARCHAR(20), 
+                      WK INT, INSTRUCTOR VARCHAR(20), EF VARCHAR(10), STARTSON VARCHAR(20))")
+      #connection.query("INSERT INTO SEMESTER201501(CRN, SUBJ) VALUES(10303, 'EPA')")
+      #connection.query("INSERT INTO SEMESTER201501(CRN, SUBJ) VALUES(10298, 'EPA')")
+
+    while i < rows.length
+      if i < 46
+	i+=1
+      elsif (i-28) % 918 <= 17
+	i+=1
+      else
+	x=0
+	while x < 18
+	  if rows[i+x] == nil
+	    @@conversion[i+x] = "ERROR!"
+	  else
+	    @@conversion[i+x] = rows[i+x].text.gsub(/[']/, "\\\\\'")
+	  end
+	  x+=1
+	end
+	    queryString = "INSERT IGNORE INTO SEMESTER201501(CRN, SUBJ, CRS, SEC, TITLE, CH, MAX, ENR,
+			    AVAIL, WL, DAYS, STIME, ETIME, ROOM, WK, INSTRUCTOR, EF, STARTSON)
+	                    VALUES(" + @@conversion[i] + ",'" + @@conversion[i+1] + "','" + 
+			    @@conversion[i+2] + "','" +	@@conversion[i+3] + "','" + 
+			    @@conversion[i+4] + "'," + @@conversion[i+5] + "," + 
+			    @@conversion[i+6] + "," + @@conversion[i+7] + "," + 
+			    @@conversion[i+8] + "," + @@conversion[i+9] + ",'" + 
+			    @@conversion[i+10] + "','" + @@conversion[i+11] + "','" + 
+			    @@conversion[i+12] + "','" + @@conversion[i+13] + "'," + 
+			    @@conversion[i+14] + ",'" + @@conversion[i+15] + "','" + 
+			    @@conversion[i+16] + "','" + @@conversion[i+17] + "')"
+	    connection.query(queryString)
+	  i+=17
+      end # end if/else
+      i+=1
+    end # end while
+  end # end get_data function
+  
+  def query_data()
+    begin
+      dbconfig = YAML::load(File.open('config/database.yml'))
+      connection = Mysql2::Client.new(:host => dbconfig['hostname'], :username => dbconfig['username'], 
+                                      :password => dbconfig['password'], :database => dbconfig['database'])
+      rs = connection.query("SELECT * FROM SEMESTER201501")
+    
+      @@test = "<table>"
+      rs.each(:as => :array) do |row|
+	@@test += "<tr>"
+	z = 0
+	while z < 18
+	  @@test+= "<td>" + row[z].to_s + "</td>"
+	  z+=1
+	end
+	@@test += "</tr>"
+      end
+      @@test += "</table>"
+    rescue Mysql::Error => e
+      @@test =  e.error
+    ensure
+      connection.close if connection
+    end
+    
+    return @@test
+  end
   
   # Returns the formatted scraped content from the Concord website.
   def scrape_site(choice)
