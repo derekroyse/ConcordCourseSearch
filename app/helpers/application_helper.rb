@@ -192,7 +192,7 @@ module ApplicationHelper
   end # end get_data function
   
   def query_data()
-    begin
+ #   begin
       dbconfig = YAML::load_file('config/database.yml')["development"]
       connection = Mysql2::Client.new(:host => dbconfig['host'], 
 				      :username => dbconfig['username'], 
@@ -200,24 +200,24 @@ module ApplicationHelper
  				      :database => dbconfig['database'])
       rs = connection.query("SELECT * FROM SEMESTER201501")
     
-      @@test = "<table>"
-      rs.each(:as => :array) do |row|
-     	@@test += "<tr>"
-	z = 0
-	while z < 18
-	  @@test+= "<td>" + row[z].to_s + "</td>"
-	  z+=1
-	end
-	@@test += "</tr>"
-     end
-      @@test += "</table>"
-    rescue Mysql::Error => e
-      @@test =  e.error
-    ensure
-      connection.close if connection
-    end
-    
-    return @@test
+#       @@test = "<table>"
+#       rs.each(:as => :array) do |row|
+#      	@@test += "<tr>"
+# 	z = 0
+# 	while z < 18
+# 	  @@test+= "<td>" + row[z].to_s + "</td>"
+# 	  z+=1
+# 	end
+# 	@@test += "</tr>"
+#      end
+#       @@test += "</table>"
+#     rescue Mysql::Error => e
+#       @@test =  e.error
+#     ensure
+#       connection.close if connection
+#     end
+#     
+     return rs
   end
   
   # Returns the formatted scraped content from the Concord website.

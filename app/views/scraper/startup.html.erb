@@ -1,5 +1,7 @@
 <% provide(:title, '') %>
 
+<% @@currentSemester = query_data() %>
+
 <div class="top"> <!-- Top info pane -->
   <div class="titles"> <!-- Semester Selection Form -->
     <h1>List of Courses</h1>
@@ -182,6 +184,31 @@
 </div>
 </div>
 
+<table>
+<%	@@currentSemester.each(:as => :array) do |row| %>
+	<tr>
+	  <td><%= row[0].to_s %> </td>
+	  <td><%= row[1].to_s %> </td>
+	  <td><%= row[2].to_s %> </td>
+	  <td><%= row[3].to_s %> </td>
+	  <td><%= row[4].to_s %> </td>
+	  <td><%= row[5].to_s %> </td>
+	  <td><%= row[6].to_s %> </td>
+	  <td><%= row[7].to_s %> </td>
+	  <td><%= row[8].to_s %> </td>
+	  <td><%= row[9].to_s %> </td>
+	  <td><%= row[10].to_s %> </td>
+	  <td><%= row[11].to_s %> </td>
+	  <td><%= row[12].to_s %> </td>
+	  <td><%= row[13].to_s %> </td>
+	  <td><%= row[14].to_s %> </td>
+	  <td><%= row[15].to_s %> </td>
+	  <td><%= row[16].to_s %> </td>
+	  <td><%= row[17].to_s %> </td>
+	</tr>
+<% end %>	
+</table>
+
 <% /scrape_site(params[:selection]).html_safe/ %>
-<% get_data() %>
-<%= query_data().html_safe %>
+<% /get_data()/ %>
+
