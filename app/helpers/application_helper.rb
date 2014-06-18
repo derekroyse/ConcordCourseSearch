@@ -143,10 +143,12 @@ module ApplicationHelper
     rows = data.search("td")
     @@numRecords = (rows.length/18)-(rows.length/900)-1
     
-      dbconfig = YAML::load(File.open('config/database.yml'))
-      connection = Mysql2::Client.new(:host => dbconfig['hostname'], :username => dbconfig['username'], 
-                                      :password => dbconfig['password'], :database => dbconfig['database'])
-      connection.query("DROP TABLE SEMESTER201501")
+      dbconfig = YAML::load_file('config/database.yml')["development"]
+      connection = Mysql2::Client.new(:host => dbconfig['host'], 
+					:username => dbconfig['username'], 
+                                      	:password => dbconfig['password'], 
+					:database => dbconfig['database'])
+      connection.query("DROP TABLE IF EXISTS SEMESTER201501")
       connection.query("CREATE TABLE IF NOT EXISTS \ SEMESTER201501(
                       CRN INT PRIMARY KEY, SUBJ VARCHAR(5), CRS VARCHAR(5),	
                       SEC VARCHAR(5), TITLE VARCHAR(50), CH INT,	
@@ -191,21 +193,23 @@ module ApplicationHelper
   
   def query_data()
     begin
-      dbconfig = YAML::load(File.open('config/database.yml'))
-      connection = Mysql2::Client.new(:host => dbconfig['hostname'], :username => dbconfig['username'], 
-                                      :password => dbconfig['password'], :database => dbconfig['database'])
+      dbconfig = YAML::load_file('config/database.yml')["development"]
+      connection = Mysql2::Client.new(:host => dbconfig['host'], 
+				      :username => dbconfig['username'], 
+                                      :password => dbconfig['password'], 
+ 				      :database => dbconfig['database'])
       rs = connection.query("SELECT * FROM SEMESTER201501")
     
       @@test = "<table>"
       rs.each(:as => :array) do |row|
-	@@test += "<tr>"
+     	@@test += "<tr>"
 	z = 0
 	while z < 18
 	  @@test+= "<td>" + row[z].to_s + "</td>"
 	  z+=1
 	end
 	@@test += "</tr>"
-      end
+     end
       @@test += "</table>"
     rescue Mysql::Error => e
       @@test =  e.error
