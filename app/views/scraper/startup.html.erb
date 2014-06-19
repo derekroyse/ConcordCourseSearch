@@ -1,7 +1,5 @@
 <% provide(:title, '') %>
 
-<% @@currentSemester = query_data() %>
-
 <div class="top"> <!-- Top info pane -->
   <div class="titles"> <!-- Semester Selection Form -->
     <h1>List of Courses</h1>
@@ -184,6 +182,9 @@
 </div>
 </div>
 
+<% /get_data()/ %>
+<% @@currentSemester = query_data(params[:selection]) %>
+
 <table>
 <%	@@currentSemester.each(:as => :array) do |row| %>
 	<tr>
@@ -208,7 +209,4 @@
 	</tr>
 <% end %>	
 </table>
-
-<% /scrape_site(params[:selection]).html_safe/ %>
-<% /get_data()/ %>
 

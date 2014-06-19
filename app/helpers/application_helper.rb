@@ -11,7 +11,7 @@ module ApplicationHelper
   @@numRecords = 0
   @@nilReturn = "\"\""
   @@recordsPerTable = 54
-  @@tinyArray = ['Select a Semester', 201501]
+  @@tinyArray = [['Select a Semester', 201501], ['Spring Semester 2014', 201402]]
   @@semesterArray = [
       ['Select a Semester', 201501],	  ['Fall Semester 2014', 201501],
       ['Second Summer Term 2014', 201405 ], ['First Summer Term 2014', 201404],  
@@ -115,15 +115,10 @@ module ApplicationHelper
   end # end full_title
   
   def get_data()
-    #@@choice = choice
-    # Clear the array
-    @@records = Array.new(18){Array.new}
-    # Loop variables
-    i = 0
-    j = 0
-    x = 0
-    y = 0
-    z = 0
+    # Connect to database.
+    dbconfig = YAML::load_file('config/database.yml')["development"]
+    connection = Mysql2::Client.new(:host => dbconfig['host'], :username => dbconfig['username'], 
+                                    :password => dbconfig['password'], :database => dbconfig['database'])
 
     # Setup the target website
     agent = Mechanize.new
@@ -131,40 +126,37 @@ module ApplicationHelper
     data = agent.get('https://apps.concord.edu/schedules/seatstaken.php')
     select_list = data.form_with(:action => '/schedules/seatstaken.php')
  
-    # The choice value is nil, enter a default value, otherwise use the user's choice
-    if @@choice.inspect == "nil"
-      select_list.field_with(:name =>"term").value = 201501
-    else
-      select_list.field_with(:name =>"term").value = @@choice
-    end
-    
-    # Grab raw data from website (with the selected semester)
-    data = agent.submit(select_list)
-    rows = data.search("td")
-    @@numRecords = (rows.length/18)-(rows.length/900)-1
-    
-      dbconfig = YAML::load_file('config/database.yml')["development"]
-      connection = Mysql2::Client.new(:host => dbconfig['host'], 
-					:username => dbconfig['username'], 
-                                      	:password => dbconfig['password'], 
-					:database => dbconfig['database'])
-      connection.query("DROP TABLE IF EXISTS SEMESTER201501")
-      connection.query("CREATE TABLE IF NOT EXISTS \ SEMESTER201501(
+  begin
+     # Grab raw data from website for each semester in the semester array.
+    @@semesterArray.each do |row|
+      # Loop variable.
+      i = 0
+      
+      # Get data.
+      select_list.field_with(:name =>"term").value = row[1]
+      data = agent.submit(select_list)
+      rows = data.search("td")
+      @@numRecords = (rows.length/18)-(rows.length/900)-1
+   
+      # Drop old table and create new table.
+      queryString = "DROP TABLE IF EXISTS SEMESTER" + row[1].to_s
+      connection.query(queryString)
+      queryString = "CREATE TABLE IF NOT EXISTS \ SEMESTER" + row[1].to_s + "(
                       CRN INT PRIMARY KEY, SUBJ VARCHAR(5), CRS VARCHAR(5),	
                       SEC VARCHAR(5), TITLE VARCHAR(50), CH INT,	
                       MAX INT, ENR INT, AVAIL INT, WL INT, DAYS VARCHAR(10), 
                       STIME VARCHAR(5), ETIME VARCHAR(5), ROOM VARCHAR(20), 
-                      WK INT, INSTRUCTOR VARCHAR(20), EF VARCHAR(10), STARTSON VARCHAR(20))")
-      #connection.query("INSERT INTO SEMESTER201501(CRN, SUBJ) VALUES(10303, 'EPA')")
-      #connection.query("INSERT INTO SEMESTER201501(CRN, SUBJ) VALUES(10298, 'EPA')")
-
+                      WK INT, INSTRUCTOR VARCHAR(20), EF VARCHAR(10), STARTSON VARCHAR(20))"
+      connection.query(queryString)
+      
+    # Insert rows of data into database
     while i < rows.length
       if i < 46
-	i+=1
+	i += 1
       elsif (i-28) % 918 <= 17
-	i+=1
+	i += 1
       else
-	x=0
+	x = 0
 	while x < 18
 	  if rows[i+x] == nil
 	    @@conversion[i+x] = "ERROR!"
@@ -173,7 +165,7 @@ module ApplicationHelper
 	  end
 	  x+=1
 	end
-	    queryString = "INSERT IGNORE INTO SEMESTER201501(CRN, SUBJ, CRS, SEC, TITLE, CH, MAX, ENR,
+	    queryString3 = "INSERT IGNORE INTO SEMESTER" + row[1].to_s + "(CRN, SUBJ, CRS, SEC, TITLE, CH, MAX, ENR,
 			    AVAIL, WL, DAYS, STIME, ETIME, ROOM, WK, INSTRUCTOR, EF, STARTSON)
 	                    VALUES(" + @@conversion[i] + ",'" + @@conversion[i+1] + "','" + 
 			    @@conversion[i+2] + "','" +	@@conversion[i+3] + "','" + 
@@ -184,39 +176,43 @@ module ApplicationHelper
 			    @@conversion[i+12] + "','" + @@conversion[i+13] + "'," + 
 			    @@conversion[i+14] + ",'" + @@conversion[i+15] + "','" + 
 			    @@conversion[i+16] + "','" + @@conversion[i+17] + "')"
-	    connection.query(queryString)
+	    connection.query(queryString3)
 	  i+=17
       end # end if/else
       i+=1
     end # end while
+  end # end semester loop
+  rescue Mysql::Error => e
+    @@test =  e.error
+  ensure
+    connection.close if connection
+  end # end begin/rescue
+    
+  return @@test
   end # end get_data function
   
-  def query_data()
- #   begin
+  def query_data(choice)
+  
+    begin
+      # If the choice value is nil, enter a default value, otherwise use the user's choice
+      if choice.inspect == "nil"
+	choice = 201501
+      end
+    
       dbconfig = YAML::load_file('config/database.yml')["development"]
       connection = Mysql2::Client.new(:host => dbconfig['host'], 
 				      :username => dbconfig['username'], 
                                       :password => dbconfig['password'], 
  				      :database => dbconfig['database'])
-      rs = connection.query("SELECT * FROM SEMESTER201501")
+      queryString = "SELECT * FROM SEMESTER" + choice.to_s 
+      rs = connection.query(queryString)
     
-#       @@test = "<table>"
-#       rs.each(:as => :array) do |row|
-#      	@@test += "<tr>"
-# 	z = 0
-# 	while z < 18
-# 	  @@test+= "<td>" + row[z].to_s + "</td>"
-# 	  z+=1
-# 	end
-# 	@@test += "</tr>"
-#      end
-#       @@test += "</table>"
-#     rescue Mysql::Error => e
-#       @@test =  e.error
-#     ensure
-#       connection.close if connection
-#     end
-#     
+     rescue Mysql::Error => e
+       @@test =  e.error
+     ensure
+       connection.close if connection
+     end
+    
      return rs
   end
   
