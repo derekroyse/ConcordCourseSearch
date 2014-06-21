@@ -185,12 +185,36 @@
 </div>
 
   
-  <%= search(params[:crn_input], params[:subj_input], params[:crs_input],
+  <% @@currentSemester = search_query(params[:crn_input], params[:subj_input], params[:crs_input],
 	      params[:sec_input], params[:title_input], params[:ch_input],
 	      params[:max_input], params[:enr_input], params[:avail_input],
 	      params[:wl_input], params[:days_input], params[:stime_input],
 	      params[:etime_input], params[:bldgroom_input], params[:wk_input],
-	      params[:instructor_input], params[:ef_input], params[:startson_input],params[:searchType]).html_safe %>
+	      params[:instructor_input], params[:ef_input], params[:startson_input],params[:searchType]) %>
   <br>
   
+  <table>
+<%	@@currentSemester.each(:as => :array) do |row| %>
+	<tr>
+	  <td><%= row[0].to_s %> </td>
+	  <td><%= row[1].to_s %> </td>
+	  <td><%= row[2].to_s %> </td>
+	  <td><%= row[3].to_s %> </td>
+	  <td><%= row[4].to_s %> </td>
+	  <td><%= row[5].to_s %> </td>
+	  <td><%= row[6].to_s %> </td>
+	  <td><%= row[7].to_s %> </td>
+	  <td><%= row[8].to_s %> </td>
+	  <td><%= row[9].to_s %> </td>
+	  <td><%= row[10].to_s %> </td>
+	  <td><%= row[11].to_s %> </td>
+	  <td><%= row[12].to_s %> </td>
+	  <td><%= row[13].to_s %> </td>
+	  <td><%= row[14].to_s %> </td>
+	  <td><%= row[15].to_s %> </td>
+	  <td><%= row[16].to_s %> </td>
+	  <td><%= row[17].to_s %> </td>
+	</tr>
+<% end %>	
+</table>
   

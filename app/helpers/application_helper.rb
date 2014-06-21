@@ -11,9 +11,10 @@ module ApplicationHelper
   @@numRecords = 0
   @@nilReturn = "\"\""
   @@recordsPerTable = 54
-  @@tinyArray = [['Select a Semester', 201501], ['Spring Semester 2014', 201402]]
-  @@semesterArray = [
-      ['Select a Semester', 201501],	  ['Fall Semester 2014', 201501],
+  @@currentArray = [['Fall Semester 2014', 201501], ['Second Summer Term 2014', 201405 ], 
+                    ['First Summer Term 2014', 201404], ['Summer Intersession 2014', 201403], 
+                    ['Spring Semester 2014', 201402]]
+  @@semesterArray = [['Select a Semester', 201501], ['Fall Semester 2014', 201501],
       ['Second Summer Term 2014', 201405 ], ['First Summer Term 2014', 201404],  
       ['Summer Intersession 2014', 201403], ['Spring Semester 2014', 201402],  
       ['Fall Semester 2013', 201401], 	  ['Graduate Summer Term 2013', 201306],  
@@ -113,7 +114,8 @@ module ApplicationHelper
       "#{base_title} | #{page_title}"
     end
   end # end full_title
-  
+
+  # Scrape Concord's website for class data on all semesters.
   def get_data()
     # Connect to database.
     dbconfig = YAML::load_file('config/database.yml')["development"]
@@ -191,19 +193,21 @@ module ApplicationHelper
   return @@test
   end # end get_data function
   
+  # Query database and return data on a selected semester.
   def query_data(choice)
   
     begin
       # If the choice value is nil, enter a default value, otherwise use the user's choice
       if choice.inspect == "nil"
 	choice = 201501
+	@@choice = 201501
+      else
+	@@choice = choice
       end
     
       dbconfig = YAML::load_file('config/database.yml')["development"]
-      connection = Mysql2::Client.new(:host => dbconfig['host'], 
-				      :username => dbconfig['username'], 
-                                      :password => dbconfig['password'], 
- 				      :database => dbconfig['database'])
+      connection = Mysql2::Client.new(:host => dbconfig['host'], :username => dbconfig['username'], 
+                                      :password => dbconfig['password'], :database => dbconfig['database'])
       queryString = "SELECT * FROM SEMESTER" + choice.to_s 
       rs = connection.query(queryString)
     
@@ -215,107 +219,75 @@ module ApplicationHelper
     
      return rs
   end
+
+
+  def search_query(crn, subj, crs, sec, title, ch, max, enr, avail, wl, days, 
+                   stime, etime, bldgroom, wk, instructor, ef, starts, searchType)
+    # Initializing blank int values.
+    if crn.inspect == @@nilReturn
+      crn = -99
+    end
+    if ch.inspect == @@nilReturn
+      ch = -99
+    end
+    if max.inspect == @@nilReturn
+      max = -99
+    end
+    if enr.inspect == @@nilReturn
+      enr = -99
+    end
+    if avail.inspect == @@nilReturn
+      avail = -99
+    end
+    if wl.inspect == @@nilReturn
+      wl = -99
+    end
+    if wk.inspect == @@nilReturn
+      wk = -99
+    end
+    
+    begin
+      # Connect to database.
+      dbconfig = YAML::load_file('config/database.yml')["development"]
+      connection = Mysql2::Client.new(:host => dbconfig['host'], 
+                                      :username => dbconfig['username'], 
+				      :password => dbconfig['password'], 
+                                      :database => dbconfig['database'])
+      # Inclusive Search
+      # Maybe do a conditional here: if search = exclusive, a string is set to 
+      # "AND", if inclusive it's set to "OR" then build the queryString with 
+      # the string variable in place and just change the string based on the user's input.
+      queryString = "SELECT * FROM SEMESTER#{@@choice.to_s} WHERE CRN = #{crn}
+		    OR SUBJ = '#{subj}' OR CRS = '#{crs}' OR SEC = '#{sec}' 
+		    OR TITLE = '#{title}' OR CH = #{ch} OR MAX = #{max}
+		    OR ENR = #{enr} OR AVAIL = #{avail} OR WL = #{wl}
+		    OR DAYS = '#{days}' OR STIME = '#{stime} OR ETIME = '#{etime}
+		    OR ROOM = '#{bldgroom}' OR WK = #{wk} OR INSTRUCTOR = '#{instructor}'
+		    OR EF = '#{ef}' OR STARTSON = '#{starts}'"
+      rs = connection.query(queryString)
+    rescue Mysql::Error => e
+      @@test =  e.error
+    ensure
+      connection.close if connection
+    end # end rescue/ensure
+     
+     return rs
+    
+  end # end search_query method
   
-  # Returns the formatted scraped content from the Concord website.
-  def scrape_site(choice)
-    #@@choice = choice
-	# Clear the array
-    @@records = Array.new(18){Array.new}
-    # Loop variables
-    i = 0
-    j = 0
-    x = 0
-    y = 0
-    z = 0
-	
-    # Setup the target website
-    agent = Mechanize.new
-    agent.read_timeout=60
-    data = agent.get('https://apps.concord.edu/schedules/seatstaken.php')
-    select_list = data.form_with(:action => '/schedules/seatstaken.php')
- 
-    # The choice value is nil, enter a default value, otherwise use the user's choice
-    if @@choice.inspect == "nil"
-      select_list.field_with(:name =>"term").value = 201501
-    else
-      select_list.field_with(:name =>"term").value = @@choice
-    end
-    
-    # Grab raw data from website (with the selected semester)
-    data = agent.submit(select_list)
-    rows = data.search("td")
-    @@numRecords = (rows.length/18)-(rows.length/900)-1
-    
-    # Populate headers and row arrays.
-    # The first 28 (0-27) values are from the info table.
-    # The next 17 (28-45) values are headers. Subsequent sets of 17 values each create records.
-    # Every 1000 values (18 columns * 54 rows, offset by the initial 28 info table cells) 
-    # the headers repeat, and so are ignored.
-    while i < rows.length
-      if i > 27 && i < 46
-	@@headers[z] = rows[i].text
-	i+=1
-	z+=1
-      elsif i < 28
-	i+=1
-      elsif (i-28) % 918 <= 17
-	i+=1
-      else
-	while y < 18
-	  if rows[i] != nil
-	    (@@records[x] ||= [])[y] = rows[i].text
-	  else
-	    (@@records[x] ||= [])[y] = "ERROR"
-	  end
-	  y+=1
-	  i+=1
-	end #end while
-	x+=1
-	y=0
-      end # end if/else
-    end # end while
-    
-    # Add HTML formatting to headers
-    formatted_headers = "<tr class='table_header'>"
-    for element in @@headers
-      formatted_headers += "<td>" + element + "</td>"
-    end
-    formatted_headers += "</tr>"
-   
-    # Add HTML formatting to records
-    counter = 0
-    formatted_records = ""
-    @@records.each_with_index do |row|
-      formatted_records += "<tr>"
-      row.each_with_index do |column|
-	formatted_records += "<td>"+ column + "</td>"
-      end
-      formatted_records += "</tr>"
-      counter += 1
-      if counter % @@recordsPerTable == 0
-	formatted_records = formatted_records + formatted_headers
-      end
-    end
-    formatted_records += "</table>"
-    
-    # Combine HTML formatted headers to HTML formatted records.
-    formatted_final = "<table>"
-    formatted_final = formatted_final + formatted_headers + formatted_records
-    return formatted_final
-  end # end scrape_site
   
+  
+  # DEPRECATED
   def search(crn, subj, crs, sec, title, ch, max, enr, avail, wl, days, stime, etime, bldgroom, wk, instructor, ef, starts, searchType)
-     # Loop variables
-	 x = 0
-	 # String to hold the value that is passed when a text form is returned with no value.
-	 nilString = "\"\""
+	# Loop variables
+	x = 0
 	 
-	 # Add HTML formatting to headers.
-     formatted_headers = "<table><tr class='table_header'>"
+	# Add HTML formatting to headers.
+	formatted_headers = "<table><tr class='table_header'>"
 		for element in @@headers
 			formatted_headers += "<td>" + element + "</td>"
 		end #end for
-    formatted_headers += "</tr>"
+	formatted_headers += "</tr>"
     
 	# Searches through records for matches and then adds HTML formatting.
 	formatted_records = ""
@@ -398,4 +370,4 @@ module ApplicationHelper
   end
 end #end method
 
-end
+end #end module
