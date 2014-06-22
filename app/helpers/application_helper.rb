@@ -220,31 +220,22 @@ module ApplicationHelper
      return rs
   end
 
+  def clean_input(array)
+    i = 0
+    while i < array.length
+      if array[i].inspect == @@nilReturn
+	array[i] = -99
+      end
+      i+=1
+    end #end loop
+      
+    return array
+  end # end clean_input method
 
-  def search_query(crn, subj, crs, sec, title, ch, max, enr, avail, wl, days, 
-                   stime, etime, bldgroom, wk, instructor, ef, starts, searchType)
-    # Initializing blank int values.
-    if crn.inspect == @@nilReturn
-      crn = -99
-    end
-    if ch.inspect == @@nilReturn
-      ch = -99
-    end
-    if max.inspect == @@nilReturn
-      max = -99
-    end
-    if enr.inspect == @@nilReturn
-      enr = -99
-    end
-    if avail.inspect == @@nilReturn
-      avail = -99
-    end
-    if wl.inspect == @@nilReturn
-      wl = -99
-    end
-    if wk.inspect == @@nilReturn
-      wk = -99
-    end
+  def search_query(inputArray)
+    
+    # Clean array to prevent SQL injection and other bad input.
+    cleanArray = clean_input(inputArray)
     
     begin
       # Connect to database.
@@ -257,13 +248,13 @@ module ApplicationHelper
       # Maybe do a conditional here: if search = exclusive, a string is set to 
       # "AND", if inclusive it's set to "OR" then build the queryString with 
       # the string variable in place and just change the string based on the user's input.
-      queryString = "SELECT * FROM SEMESTER#{@@choice.to_s} WHERE CRN = #{crn}
-		    OR SUBJ = '#{subj}' OR CRS = '#{crs}' OR SEC = '#{sec}' 
-		    OR TITLE = '#{title}' OR CH = #{ch} OR MAX = #{max}
-		    OR ENR = #{enr} OR AVAIL = #{avail} OR WL = #{wl}
-		    OR DAYS = '#{days}' OR STIME = '#{stime} OR ETIME = '#{etime}
-		    OR ROOM = '#{bldgroom}' OR WK = #{wk} OR INSTRUCTOR = '#{instructor}'
-		    OR EF = '#{ef}' OR STARTSON = '#{starts}'"
+      queryString = "SELECT * FROM SEMESTER#{@@choice.to_s} WHERE CRN = #{cleanArray[0]}
+		    OR SUBJ = '#{cleanArray[1]}' OR CRS = '#{cleanArray[2]}' OR SEC = '#{cleanArray[3]}' 
+		    OR TITLE = '#{cleanArray[4]}' OR CH = #{cleanArray[5]} OR MAX = #{cleanArray[6]}
+		    OR ENR = #{cleanArray[7]} OR AVAIL = #{cleanArray[8]} OR WL = #{cleanArray[9]}
+		    OR DAYS = '#{cleanArray[10]}' OR STIME = '#{cleanArray[11]} OR ETIME = '#{cleanArray[12]}
+		    OR ROOM = '#{cleanArray[13]}' OR WK = #{cleanArray[14]} OR INSTRUCTOR = '#{cleanArray[15]}'
+		    OR EF = '#{cleanArray[16]}' OR STARTSON = '#{cleanArray[17]}'"
       rs = connection.query(queryString)
     rescue Mysql::Error => e
       @@test =  e.error

@@ -184,13 +184,15 @@
 </div>
 </div>
 
-  
-  <% @@currentSemester = search_query(params[:crn_input], params[:subj_input], params[:crs_input],
-	      params[:sec_input], params[:title_input], params[:ch_input],
-	      params[:max_input], params[:enr_input], params[:avail_input],
-	      params[:wl_input], params[:days_input], params[:stime_input],
-	      params[:etime_input], params[:bldgroom_input], params[:wk_input],
-	      params[:instructor_input], params[:ef_input], params[:startson_input],params[:searchType]) %>
+  <% inputArray = [params[:crn_input], params[:subj_input], params[:crs_input],
+		params[:sec_input], params[:title_input], params[:ch_input],
+		params[:max_input], params[:enr_input], params[:avail_input],
+		params[:wl_input], params[:days_input], params[:stime_input],
+		params[:etime_input], params[:bldgroom_input], params[:wk_input],
+		params[:instructor_input], params[:ef_input], params[:startson_input],
+		params[:searchType]] %>
+		
+  <% @@currentSemester = search_query(inputArray) %>
   <br>
   
   <table>
