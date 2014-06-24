@@ -195,8 +195,12 @@
   <% @@currentSemester = search_query(inputArray) %>
   <br>
   
-  <table>
+<table>
+<% counter = 0 %>
 <%	@@currentSemester.each(:as => :array) do |row| %>
+  <% if counter % 25 == 0 %>
+  <%= print_header().html_safe %>
+  <% end %>
 	<tr>
 	  <td><%= row[0].to_s %> </td>
 	  <td><%= row[1].to_s %> </td>
@@ -217,6 +221,7 @@
 	  <td><%= row[16].to_s %> </td>
 	  <td><%= row[17].to_s %> </td>
 	</tr>
+  <% counter += 1 %>
 <% end %>	
 </table>
   
