@@ -116,10 +116,10 @@
 	<%= text_field_tag :startson_input, nil, placeholder:"Starting Day" %>
       </div>
       <div class="clearLeft">
-	<%= radio_button_tag(:searchType, 0, true, class:"displayInline") %>
-	<%= label_tag(:search_in, "Inclusive", class:"displayInline") %>
-	<%= radio_button_tag(:searchType, 1, false, class:"displayInline") %>
-	<%= label_tag(:search_ex, "Exclusive", class:"displayInline") %>
+	<% radio_button_tag(:searchType, 0, true, class:"displayInline") %>
+	<% label_tag(:search_in, "Inclusive", class:"displayInline") %>
+	<% radio_button_tag(:searchType, 1, false, class:"displayInline") %>
+	<% label_tag(:search_ex, "Exclusive", class:"displayInline") %>
 	<br>
 	<%= submit_tag("Search", class:"clearLeft") %>
 	<% end %> <!-- Search Form -->
