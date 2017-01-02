@@ -9,7 +9,7 @@ gem 'mechanize', '2.7.2'
 gem 'rufus-scheduler', '3.0.2'
 gem 'pg'
 gem 'mysql'
-gem 'mysql2', '0.4.5'
+gem 'mysql2', '0.3.9'
 #gem 'sqlite3'
 gem 'sprockets', '2.11.0'
 
