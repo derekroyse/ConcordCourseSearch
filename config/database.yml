@@ -1,6 +1,9 @@
 development:
   adapter: mysql2
+  encoding: utf8
+  reconnect: false
   database: heroku_bdcaf75992a46de
+  pool: 5
   username: b60c88722ed49e
   password: e726e5c2
   host: us-cdbr-iron-east-04.cleardb.net
@@ -11,7 +14,10 @@ development:
 # Do not set this db to the same as development or production.
 test:
   adapter: mysql2
+  encoding: utf8
+  reconnect: false
   database: heroku_bdcaf75992a46de
+  pool: 5
   username: b60c88722ed49e
   password: e726e5c2
   host: us-cdbr-iron-east-04.cleardb.net
@@ -19,7 +25,10 @@ test:
 
 production:
   adapter: mysql2
+  encoding: utf8
+  reconnect: false
   database: heroku_bdcaf75992a46de
+  pool: 5
   username: b60c88722ed49e
   password: e726e5c2
   host: us-cdbr-iron-east-04.cleardb.net
