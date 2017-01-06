@@ -117,7 +117,8 @@ module ApplicationHelper
   # Scrape Concord's website for class data on all semesters.
   def get_data()
     # Connect to database.
-    dbconfig = YAML::load_file('config/database.yml')["development"]
+    #dbconfig = YAML::load_file('config/database.yml')["development"]
+	dbconfig = YAML.load(ERB.new(File.read(File.join("config","database.yml"))).result)
     connection = Mysql2::Client.new(:host => dbconfig['host'], :username => dbconfig['username'], 
                                     :password => dbconfig['password'], :database => dbconfig['database'])
 
