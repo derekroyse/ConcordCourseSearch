@@ -8,7 +8,7 @@ gem 'nokogiri', '1.6.1'
 gem 'mechanize', '2.7.2'
 gem 'rufus-scheduler', '3.0.2'
 gem 'mysql'
-gem 'mysql2', '0.3.9'
+gem 'mysql2', '~> 0.3.18'
 #gem 'sqlite3'
 gem 'sprockets', '2.11.0'
 
