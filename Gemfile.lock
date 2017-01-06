@@ -182,7 +182,7 @@ DEPENDENCIES
   jquery-rails (= 3.0.4)
   mechanize (= 2.7.2)
   mysql
-  mysql2 (= 0.3.20)
+  mysql2 (~> 0.3.18)
   nokogiri (= 1.6.1)
   rails (= 4.0.2)
   rails_12factor (= 0.0.2)

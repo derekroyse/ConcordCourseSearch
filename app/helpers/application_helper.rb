@@ -156,8 +156,7 @@ module ApplicationHelper
       connection.query(queryString)
       
     # Insert rows of data into database
-    # while i < rows.length
-	while i < 100
+    while i < rows.length
       if i < 46
 	i += 1
       elsif (i-28) % 918 <= 17
