@@ -1,19 +1,33 @@
-default: &default
-  adapter: mysql2
-  encoding: utf8
-  pool: 5
-  username: b60c88722ed49e
-  password: e726e5c2
-  host: us-cdbr-iron-east-04.cleardb.net
-
 development:
-  <<: *default
-  database: ccs_development
-
+    adapter: mysql2
+    encoding: utf8
+    reconnect: false
+    database: heroku_bdcaf75992a46de
+    pool: 5
+    username: b60c88722ed49e
+    password: e726e5c2
+    host: us-cdbr-iron-east-04.cleardb.net
+    socket: /var/run/mysqld/mysqld.sock
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
 test:
-  <<: *default
-  database: ccs_test
-
+    adapter: mysql2
+    encoding: utf8
+    reconnect: false
+    database: heroku_bdcaf75992a46de
+    pool: 5
+    username: b60c88722ed49e
+    password: e726e5c2
+    host: us-cdbr-iron-east-04.cleardb.net
+    socket: /var/run/mysqld/mysqld.sock
 production:
-  <<: *default
-  database: ENV['CLEARDB_DATABASE_URL']
+    adapter: mysql2
+    encoding: utf8
+    reconnect: false
+    database: heroku_bdcaf75992a46de
+    pool: 5
+    username: b60c88722ed49e
+    password: e726e5c2
+    host: us-cdbr-iron-east-04.cleardb.net
+    socket: /var/run/mysqld/mysqld.sock
