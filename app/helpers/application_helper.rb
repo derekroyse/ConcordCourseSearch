@@ -170,7 +170,7 @@ module ApplicationHelper
 	    #@@conversion[i+x] = "ERROR!"
 	  #else
 	    #@@conversion[i+x] = rows[i+x].text.gsub(/[']/, "\\\\\'")
-	  end
+	  #end
 	  x+=1
 	end
 	   # queryString3 = "INSERT IGNORE INTO SEMESTER" + row[1].to_s + "(CRN, SUBJ, CRS, SEC, TITLE, CH, MAX, ENR,
