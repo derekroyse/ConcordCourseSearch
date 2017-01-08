@@ -204,9 +204,15 @@ module ApplicationHelper
   def query_data()
   
     begin    
-      dbconfig = YAML::load_file('config/database.yml')["development"]
-      connection = Mysql2::Client.new(:host => dbconfig['host'], :username => dbconfig['username'], 
-                                      :password => dbconfig['password'], :database => dbconfig['database'])
+      #dbconfig = YAML::load_file('config/database.yml')["development"]
+	  dbconfig = YAML.load(ERB.new(File.read(File.join("config","database.yml"))).result)
+      #connection = Mysql2::Client.new(:host => dbconfig['host'], :username => dbconfig['username'], 
+      #                                :password => dbconfig['password'], :database => dbconfig['database'])
+	  connection = Mysql2::Client.new(
+		:host => "us-cdbr-iron-east-04.cleardb.net", 
+		:username => "b60c88722ed49e", 
+		:password => "e726e5c2", 
+		:database => "heroku_bdcaf75992a46de")
       queryString = "SELECT * FROM SEMESTER" + @@choice.to_s 
       rs = connection.query(queryString)
     
