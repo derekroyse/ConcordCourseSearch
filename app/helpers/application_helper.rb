@@ -186,7 +186,7 @@ module ApplicationHelper
 				 
 		@@queryString3 = "INSERT IGNORE INTO SEMESTER201501(CRN, SUBJ, CRS, SEC, TITLE, CH, MAX, ENR, 
                 AVAIL, WL, DAYS, STIME, ETIME, ROOM, WK, INSTRUCTOR, EF, STARTSON) VALUES(" + 
-                 @@conversion[0] + "," + "\'" + @@conversion[1] + "\'" + "," + 
+                 @@conversion[0] + ",\'" + @@conversion[1] + "\'," + 
                  @@conversion[2] + "," + @@conversion[3] + "," + "\'" +
                  @@conversion[4]+ "\'" + "," + @@conversion[5] + "," + 
                  @@conversion[6] + "," + @@conversion[7] + "," + 
