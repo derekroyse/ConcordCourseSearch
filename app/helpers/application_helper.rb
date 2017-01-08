@@ -165,12 +165,12 @@ module ApplicationHelper
       else
 	x = 0
 	while x < 18
-		@@conversion[i+x] = "ERROR!"
-	  #if rows[i+x] == nil
-	    #@@conversion[i+x] = "ERROR!"
-	  #else
-	    #@@conversion[i+x] = rows[i+x].text.gsub(/[']/, "\\\\\'")
-	  #end
+	  if rows[i+x] == nil
+	    @@conversion[i+x] = "ERROR!"
+	  else
+	    @@conversion[i+x] = rows[i+x].text.gsub(/[']/, "\\\\\'")
+		@@conversion[i+x] = @@conversion[i+x].to_s
+	  end
 	  x+=1
 	end
 	   # queryString3 = "INSERT IGNORE INTO SEMESTER" + row[1].to_s + "(CRN, SUBJ, CRS, SEC, TITLE, CH, MAX, ENR,
@@ -188,7 +188,7 @@ module ApplicationHelper
 		@@queryString3 = "INSERT IGNORE INTO SEMESTER201501(CRN, SUBJ, CRS, SEC, TITLE, CH, MAX, ENR, 
                 AVAIL, WL, DAYS, STIME, ETIME, ROOM, WK, INSTRUCTOR, EF, STARTSON) VALUES(" + 
                  @@conversion[0] + "," + "\'" + @@conversion[1] + "\'" + "," + 
-                 @@conversion[2] + "," +    @@conversion[3] + "," + "\'" +
+                 @@conversion[2] + "," + @@conversion[3] + "," + "\'" +
                  @@conversion[4]+ "\'" + "," + @@conversion[5] + "," + 
                  @@conversion[6] + "," + @@conversion[7] + "," + 
                  @@conversion[8] + "," + @@conversion[9] + "," + "\'" +
