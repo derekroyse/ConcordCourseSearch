@@ -187,10 +187,8 @@ module ApplicationHelper
 		
 		
 		@@queryString3 = "INSERT IGNORE INTO SEMESTER201501(CRN, SUBJ, CRS, SEC, TITLE, CH, MAX, ENR, 
-                AVAIL, WL, DAYS, STIME, ETIME, ROOM, WK, INSTRUCTOR, EF, STARTSON) VALUES(" + 
-                 @@conversion[0] + ",\'" 
-		
-		@@queryString3 += @@conversion[1] + "\'," + @@conversion[2] + "," + @@conversion[3] + ",\'" + @@conversion[4]+ "\'," + @@conversion[5] + "," + @@conversion[6] + "," + @@conversion[7] + "," + @@conversion[8] + "," + @@conversion[9] + ",\'" +  @@conversion[10]+ "\'," + @@conversion[11] + "," + @@conversion[12] + ",\'" + @@conversion[13] + "\'," + @@conversion[14] + ",\'" + @@conversion[15] + "\',\'" + @@conversion[16] + "\',\'" + @@conversion[17] + "\')" 
+                AVAIL, WL, DAYS, STIME, ETIME, ROOM, WK, INSTRUCTOR, EF, STARTSON) VALUES("
+		@@queryString3 += @@conversion[0] + ",\'"  + @@conversion[1] + "\'," + @@conversion[2] + "," + @@conversion[3] + ",\'" + @@conversion[4]+ "\'," + @@conversion[5] + "," + @@conversion[6] + "," + @@conversion[7] + "," + @@conversion[8] + "," + @@conversion[9] + ",\'" +  @@conversion[10]+ "\'," + @@conversion[11] + "," + @@conversion[12] + ",\'" + @@conversion[13] + "\'," + @@conversion[14] + ",\'" + @@conversion[15] + "\',\'" + @@conversion[16] + "\',\'" + @@conversion[17] + "\')" 
 				 
 		#queryString3 = "INSERT IGNORE INTO SEMESTER201501(CRN, SUBJ, CRS, SEC, TITLE, CH, MAX, ENR, 
 		#					AVAIL, WL, DAYS, STIME, ETIME, ROOM, WK, INSTRUCTOR, EF, STARTSON)
