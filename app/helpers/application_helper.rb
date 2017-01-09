@@ -209,7 +209,7 @@ module ApplicationHelper
 						 @@conversion[15] + "','" + 	#char
 						 @@conversion[16] + "','" + 	#char
 						 @@conversion[17] + "')"		#char
-	  if (@@conversion[0] == 0)
+	  if (@@conversion[1] == "SUBJ")
 		return
 	  else
 		connection.query(@@queryString3)
