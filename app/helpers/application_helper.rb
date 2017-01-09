@@ -172,13 +172,11 @@ module ApplicationHelper
 	  end
 	  x+=1
 	end
-		# @@conversion[i+4]
-		echo "test"
 	   queryString3 = "INSERT IGNORE INTO SEMESTER" + row[1].to_s + "(CRN, SUBJ, CRS, SEC, TITLE, CH, MAX, ENR,
 			     AVAIL, WL, DAYS, STIME, ETIME, ROOM, WK, INSTRUCTOR, EF, STARTSON)
 	                     VALUES(" + @@conversion[i] + ",'" + @@conversion[i+1] + "','" + 
 			     @@conversion[i+2] + "','" +	@@conversion[i+3] + "','" + 
-			     "test" + "'," + @@conversion[i+5] + "," + 
+			     @@conversion[i+4] + "'," + @@conversion[i+5] + "," + 
 			     @@conversion[i+6] + "," + @@conversion[i+7] + "," + 
 			     @@conversion[i+8] + "," + @@conversion[i+9] + ",'" + 
 			     @@conversion[i+10] + "','" + @@conversion[i+11] + "','" + 
