@@ -15,7 +15,7 @@ module ApplicationHelper
    #                 ['First Summer Term 2014', 201404], ['Summer Intersession 2014', 201403], 
    #                 ['Spring Semester 2014', 201402]]
 					
-	@@semesterArray = [['Select a Semester', 201701]]				
+	@@semesterArray = [['Fall Semester 2016', 201701]]				
 					
 	# @@semesterArray = [['Select a Semester', 201701], 	  ['Fall Semester 2016', 201701],
 						# ['Second Summer Term 2016', 201605],		['First Summer Term 2016', 201604],
