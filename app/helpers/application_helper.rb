@@ -161,7 +161,7 @@ module ApplicationHelper
 	while i < rows.length
       if i < 48
 		i += 1
-      elsif (i-28) % 918 <= 17
+      elsif (i-30) % 918 <= 17
 		i += 1
       else
 		x = 0
