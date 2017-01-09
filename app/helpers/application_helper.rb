@@ -2,6 +2,7 @@ module ApplicationHelper
   require 'mysql'
   
   # Class variables
+  @@testing = ""
   @@choice = 201501
   @@headers = ['CRN', 'SUBJ', 'CRS', 'SEC', 'TITLE', 'CH', 'MAX', 'ENR',
                'AVAIL', 'WL', 'DAYS', 'STIME', 'ETIME', 'BLDG/ROOM', 'WK', 
