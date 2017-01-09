@@ -182,9 +182,9 @@
 </div>
 </div>
 
-<% get_data() %>
+<% @@test = get_data() %>
 <% @@currentSemester = query_data() %>
-
+<p> <%= test %> </p>
 <table>
 <% counter = 0 %>
 <%	@@currentSemester.each(:as => :array) do |row| %>
