@@ -160,6 +160,7 @@ module ApplicationHelper
     # Insert rows of data into database
 	while i < rows.length
       if i < 46
+		@@conversion[i+x] = "ERROR!"
 		i += 1
       elsif (i-28) % 918 <= 17
 		i += 1
@@ -185,15 +186,11 @@ module ApplicationHelper
 			     @@conversion[i+14] + ",'" + @@conversion[i+15] + "','" + 
 			     @@conversion[i+16] + "','" + @@conversion[i+17] + "')"
 				 
-		#queryString3 = "INSERT IGNORE INTO SEMESTER201501(CRN, SUBJ, CRS, SEC, TITLE, CH, MAX, ENR, 
-		#					AVAIL, WL, DAYS, STIME, ETIME, ROOM, WK, INSTRUCTOR, EF, STARTSON)
-		#					VALUES(1,'TEST',1,1,'TEST',1,1,1,1,1,'TEST',1,1,'TEST',1,'TEST','TEST','TEST')"
-		#connection.query(@@queryString3)
+		return @@conversion
 	  i+=17
       end # end if/else
       i+=1
     end # end while
-	return @@conversion
   end # end semester loop
     
   rescue Mysql::Error => e
