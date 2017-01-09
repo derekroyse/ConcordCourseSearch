@@ -138,7 +138,7 @@ module ApplicationHelper
      # Grab raw data from website for each semester in the semester array.
     @@semesterArray.each do |row|
       # Loop variable.
-      i = 18
+      i = 20
       
       # Get data.
       select_list.field_with(:name =>"term").value = row[1]
