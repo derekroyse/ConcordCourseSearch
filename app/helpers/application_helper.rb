@@ -138,7 +138,7 @@ module ApplicationHelper
      # Grab raw data from website for each semester in the semester array.
     @@semesterArray.each do |row|
       # Loop variable.
-      i = 0
+      i = 45
       
       # Get data.
       select_list.field_with(:name =>"term").value = row[1]
@@ -158,7 +158,7 @@ module ApplicationHelper
       connection.query(queryString)
       
     # Insert rows of data into database
-    while i < rows.length
+	while i < rows.length
       if i < 46
 		i += 1
       elsif (i-28) % 918 <= 17
