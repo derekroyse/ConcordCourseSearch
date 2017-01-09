@@ -184,7 +184,7 @@ module ApplicationHelper
 			     @@conversion[12] + "','" + @@conversion[13] + "'," + 
 			     @@conversion[14] + ",'" + @@conversion[15] + "','" + 
 			     @@conversion[16] + "','" + @@conversion[17] + "')"
-	  connection.query(queryString3)
+	  connection.query(@@queryString3)
 	  i+=17
       end # end if/else
       i+=1
