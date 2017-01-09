@@ -174,7 +174,7 @@ module ApplicationHelper
       
     # Insert rows of data into database
 	while i < rows.length
-      if i < 66
+      if i < 48
 		i += 1
       elsif (i-30) % 918 <= 17
 		i += 1
@@ -184,7 +184,7 @@ module ApplicationHelper
 		  if rows[i+x] == nil
 			@@conversion[x] = "ERROR!"
 		  else
-			@@conversion[x] = rows[i+x].text.gsub(/[']/, "\\\\\'")
+			@@conversion[x] = rows[i+x+18].text.gsub(/[']/, "\\\\\'")
 		  end #end ifelse
 		x+=1
 	    end #end while
