@@ -209,7 +209,7 @@ module ApplicationHelper
 						 @@conversion[15] + "','" + 	#char
 						 @@conversion[16] + "','" + 	#char
 						 @@conversion[17] + "')"		#char
-	  if (@@conversion[0] == "CRN")
+	  if (@@conversion[0] == 0)
 		# don't put it in the DB
 	  else
 		connection.query(@@queryString3)
