@@ -175,16 +175,27 @@ module ApplicationHelper
 	    end #end while
 	   @@queryString3 = "INSERT IGNORE INTO SEMESTER" + row[1].to_s + "(CRN, SUBJ, CRS, SEC, TITLE, CH, MAX, ENR,
 			     AVAIL, WL, DAYS, STIME, ETIME, ROOM, WK, INSTRUCTOR, EF, STARTSON)
-	                     VALUES(" + @@conversion[0] + ",'" + @@conversion[1] + "','" + 
-			     @@conversion[2] + "','" +	@@conversion[3] + "','" + 
-			     @@conversion[4] + "'," + @@conversion[5] + "," + 
-			     @@conversion[6] + "," + @@conversion[7] + "," + 
-			     @@conversion[8] + "," + @@conversion[9] + ",'" + 
-			     @@conversion[10] + "','" + @@conversion[11] + "','" + 
-			     @@conversion[12] + "','" + @@conversion[13] + "'," + 
-			     @@conversion[14] + ",'" + @@conversion[15] + "','" + 
-			     @@conversion[16] + "','" + @@conversion[17] + "')"
-	  connection.query(@@queryString3)
+	                     VALUES(" + 
+						 @@conversion[0] + ",'" + 		#int
+						 @@conversion[1] + "','" + 		#char
+						 @@conversion[2] + "','" +		#char
+						 @@conversion[3] + "','" +		#char 
+						 @@conversion[4] + "'," + 		#char
+						 @@conversion[5] + "," + 		#int
+						 @@conversion[6] + "," + 		#int
+						 @@conversion[7] + "," + 		#int
+						 @@conversion[8] + "," + 		#int
+						 @@conversion[9] + ",'" + 		#int
+						 @@conversion[10] + "','" + 	#char
+						 @@conversion[11] + "','" + 	#char
+						 @@conversion[12] + "','" + 	#char	
+						 @@conversion[13] + "'," + 		#char
+						 @@conversion[14] + ",'" + 		#int
+						 @@conversion[15] + "','" + 	#char
+						 @@conversion[16] + "','" + 	#char
+						 @@conversion[17] + "')"		#char
+	  return @@queryString3
+	  #connection.query(@@queryString3)
 	  i+=17
       end # end if/else
       i+=1
