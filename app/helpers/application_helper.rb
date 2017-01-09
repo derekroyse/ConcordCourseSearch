@@ -11,9 +11,6 @@ module ApplicationHelper
   @@numRecords = 0
   @@nilReturn = "\"\""
   @@recordsPerTable = 54
-  #@@currentArray = [['Fall Semester 2014', 201501], ['Second Summer Term 2014', 201405 ], 
-   #                 ['First Summer Term 2014', 201404], ['Summer Intersession 2014', 201403], 
-   #                 ['Spring Semester 2014', 201402]]
 					
 	@@semesterArray = [['Spring Semester 2015', 201502],	['Fall Semester 2014', 201501]]				
 					
