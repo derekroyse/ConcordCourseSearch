@@ -164,8 +164,8 @@ module ApplicationHelper
       elsif (i-28) % 918 <= 17
 	i += 1
       else
-	x = 2
-	while x < 20
+	x = 0
+	while x < 18
 	  if rows[i+x] == nil
 	    @@conversion[i+x] = "ERROR!"
 	  else
