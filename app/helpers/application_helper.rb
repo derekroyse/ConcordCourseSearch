@@ -3,7 +3,7 @@ module ApplicationHelper
   
   # Class variables
   @@testing = ""
-  @@choice = 201501
+  @@choice = 201701
   @@headers = ['CRN', 'SUBJ', 'CRS', 'SEC', 'TITLE', 'CH', 'MAX', 'ENR',
                'AVAIL', 'WL', 'DAYS', 'STIME', 'ETIME', 'BLDG/ROOM', 'WK', 
                'INSTRUCTOR', 'EF', 'STARTS']
@@ -11,9 +11,9 @@ module ApplicationHelper
   @@numRecords = 0
   @@nilReturn = "\"\""
   @@recordsPerTable = 54
-  @@currentArray = [['Fall Semester 2014', 201501], ['Second Summer Term 2014', 201405 ], 
-                    ['First Summer Term 2014', 201404], ['Summer Intersession 2014', 201403], 
-                    ['Spring Semester 2014', 201402]]
+  #@@currentArray = [['Fall Semester 2014', 201501], ['Second Summer Term 2014', 201405 ], 
+   #                 ['First Summer Term 2014', 201404], ['Summer Intersession 2014', 201403], 
+   #                 ['Spring Semester 2014', 201402]]
 					
 	@@semesterArray = [['Select a Semester', 201701]]				
 					
@@ -209,12 +209,8 @@ module ApplicationHelper
 						 @@conversion[15] + "','" + 	#char
 						 @@conversion[16] + "','" + 	#char
 						 @@conversion[17] + "')"		#char
-	  if (@@conversion[1] == "SUBJ")
-		return
-	  else
+						 
 		connection.query(@@queryString3)
-	  end
-	  
 	  i+=17
       end # end if/else
       i+=1
