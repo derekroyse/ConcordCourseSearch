@@ -184,7 +184,42 @@
 
 <% @@testing = get_data() %>
 <% @@currentSemester = query_data() %>
-<!-- <p> <%= @@testing %> </p> -->
+
+<p> <%= @@testing %> </p>
+
+<table>
+<% counter = 0 %>
+<%	@@testing.each(:as => :array) do |row| %>
+  <% if counter % 25 == 0 %>
+	<%= print_header().html_safe %>
+  <% end %>
+	<tr>
+	  <td><%= row[0].to_s %> </td>
+	  <td><%= row[1].to_s %> </td>
+	  <td><%= row[2].to_s %> </td>
+	  <td><%= row[3].to_s %> </td>
+	  <td><%= row[4].to_s %> </td>
+	  <td><%= row[5].to_s %> </td>
+	  <td><%= row[6].to_s %> </td>
+	  <td><%= row[7].to_s %> </td>
+	  <td><%= row[8].to_s %> </td>
+	  <td><%= row[9].to_s %> </td>
+	  <td><%= row[10].to_s %> </td>
+	  <td><%= row[11].to_s %> </td>
+	  <td><%= row[12].to_s %> </td>
+	  <td><%= row[13].to_s %> </td>
+	  <td><%= row[14].to_s %> </td>
+	  <td><%= row[15].to_s %> </td>
+	  <td><%= row[16].to_s %> </td>
+	  <td><%= row[17].to_s %> </td>
+	</tr>
+  <% counter += 1 %>
+<% end %>	
+</table>
+
+
+
+
 <table>
 <% counter = 0 %>
 <%	@@currentSemester.each(:as => :array) do |row| %>

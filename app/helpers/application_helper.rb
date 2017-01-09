@@ -200,8 +200,8 @@ module ApplicationHelper
 		#queryString3 = "INSERT IGNORE INTO SEMESTER201501(CRN, SUBJ, CRS, SEC, TITLE, CH, MAX, ENR, 
 		#					AVAIL, WL, DAYS, STIME, ETIME, ROOM, WK, INSTRUCTOR, EF, STARTSON)
 		#					VALUES(1,'TEST',1,1,'TEST',1,1,1,1,1,'TEST',1,1,'TEST',1,'TEST','TEST','TEST')"	
-	    #return @@queryString3
-		connection.query(@@queryString3)
+	    return rows
+		#connection.query(@@queryString3)
 	  i+=17
       end # end if/else
       i+=1
