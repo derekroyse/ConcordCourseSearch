@@ -184,11 +184,10 @@ module ApplicationHelper
 			     @@conversion[12] + "','" + @@conversion[13] + "'," + 
 			     @@conversion[14] + ",'" + @@conversion[15] + "','" + 
 			     @@conversion[16] + "','" + @@conversion[17] + "')"
-				 
-		return @@conversion
 	  i+=17
       end # end if/else
       i+=1
+	  return @@conversion
     end # end while
   end # end semester loop
     
