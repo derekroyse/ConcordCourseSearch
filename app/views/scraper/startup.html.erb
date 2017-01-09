@@ -184,7 +184,7 @@
 
 <% @@testing = get_data() %>
 <% @@currentSemester = query_data() %>
-<p> <% testing %> </p>
+<p> <% @@testing %> </p>
 <table>
 <% counter = 0 %>
 <%	@@currentSemester.each(:as => :array) do |row| %>
