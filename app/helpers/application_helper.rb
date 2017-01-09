@@ -160,7 +160,7 @@ module ApplicationHelper
     # Insert rows of data into database
 	while i < rows.length
       if i < 46
-		@@conversion[i+x] = "ERROR!"
+		@@conversion[i] = "ERROR!"
 		i += 1
       elsif (i-28) % 918 <= 17
 		i += 1
