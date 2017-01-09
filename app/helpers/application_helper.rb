@@ -210,7 +210,7 @@ module ApplicationHelper
 						 @@conversion[16] + "','" + 	#char
 						 @@conversion[17] + "')"		#char
 	  if (@@conversion[0] == 0)
-		# don't put it in the DB
+		return
 	  else
 		connection.query(@@queryString3)
 	  end
