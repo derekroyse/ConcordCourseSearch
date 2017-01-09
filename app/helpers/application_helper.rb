@@ -183,7 +183,7 @@ module ApplicationHelper
 			     @@conversion[i+12] + "','" + @@conversion[i+13] + "','" + 
 			     @@conversion[i+14] + "','" + @@conversion[i+15] + "'," + 
 			     @@conversion[i+16] + ",'" + @@conversion[i+17] + "','" + 
-			     @@conversion[i+18] + "','" + @@conversion[i+19] + "')"
+			     @@conversion[i+16] + "','" + @@conversion[i+17] + "')"
 				 
 		# queryString3 = "INSERT IGNORE INTO SEMESTER201501(CRN, SUBJ, CRS, SEC, TITLE, CH, MAX, ENR, 
                 # AVAIL, WL, DAYS, STIME, ETIME, ROOM, WK, INSTRUCTOR, EF, STARTSON) VALUES(" + 
