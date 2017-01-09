@@ -138,7 +138,7 @@ module ApplicationHelper
      # Grab raw data from website for each semester in the semester array.
     @@semesterArray.each do |row|
       # Loop variable.
-      i = 45
+      i = 0
       
       # Get data.
       select_list.field_with(:name =>"term").value = row[1]
@@ -165,25 +165,25 @@ module ApplicationHelper
 		i += 1
       else
 		x = 0
+		index = i - 46
 		while x < 18
 		  if rows[i+x] == nil
-			@@conversion[i+x] = "ERROR!"
+			@@conversion[index+x] = "ERROR!"
 		  else
-			##@@conversion[i+x] = rows[i+x].text.gsub(/[']/, "\\\\\'")
-			@@conversion[i+x] = "test"
+			@@conversion[index+x] = rows[index+x].text.gsub(/[']/, "\\\\\'")
 		  end #end ifelse
 		x+=1
 	    end #end while
 	   @@queryString3 = "INSERT IGNORE INTO SEMESTER" + row[1].to_s + "(CRN, SUBJ, CRS, SEC, TITLE, CH, MAX, ENR,
 			     AVAIL, WL, DAYS, STIME, ETIME, ROOM, WK, INSTRUCTOR, EF, STARTSON)
-	                     VALUES(" + @@conversion[i+2] + ",'" + @@conversion[i+3] + "','" + 
-			     @@conversion[i+4] + "','" +	@@conversion[i+5] + "','" + 
-			     @@conversion[i+6] + "'," + @@conversion[i+7] + "," + 
-			     @@conversion[i+8] + "," + @@conversion[i+9] + "," + 
-			     @@conversion[i+10] + "," + @@conversion[i+11] + ",'" + 
-			     @@conversion[i+12] + "','" + @@conversion[i+13] + "','" + 
-			     @@conversion[i+14] + "','" + @@conversion[i+15] + "'," + 
-			     @@conversion[i+16] + ",'" + @@conversion[i+17] + "','" + 
+	                     VALUES(" + @@conversion[i] + ",'" + @@conversion[i+1] + "','" + 
+			     @@conversion[i+2] + "','" +	@@conversion[i+3] + "','" + 
+			     @@conversion[i+4] + "'," + @@conversion[i+5] + "," + 
+			     @@conversion[i+6] + "," + @@conversion[i+7] + "," + 
+			     @@conversion[i+8] + "," + @@conversion[i+9] + ",'" + 
+			     @@conversion[i+10] + "','" + @@conversion[i+11] + "','" + 
+			     @@conversion[i+12] + "','" + @@conversion[i+13] + "'," + 
+			     @@conversion[i+14] + ",'" + @@conversion[i+15] + "','" + 
 			     @@conversion[i+16] + "','" + @@conversion[i+17] + "')"
 				 
 		#queryString3 = "INSERT IGNORE INTO SEMESTER201501(CRN, SUBJ, CRS, SEC, TITLE, CH, MAX, ENR, 
