@@ -184,7 +184,7 @@ module ApplicationHelper
 		  if rows[i+x] == nil
 			@@conversion[x] = "ERROR!"
 		  else
-			@@conversion[x] = rows[i+x+18].text.gsub(/[']/, "\\\\\'")
+			@@conversion[x] = rows[i+x].text.gsub(/[']/, "\\\\\'")
 		  end #end ifelse
 		x+=1
 	    end #end while
@@ -209,7 +209,12 @@ module ApplicationHelper
 						 @@conversion[15] + "','" + 	#char
 						 @@conversion[16] + "','" + 	#char
 						 @@conversion[17] + "')"		#char
-	  connection.query(@@queryString3)
+	  if (@@conversion[0] == "CRN")
+		# don't put it in the DB
+	  else
+		connection.query(@@queryString3)
+	  end
+	  
 	  i+=17
       end # end if/else
       i+=1
