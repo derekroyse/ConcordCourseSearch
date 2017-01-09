@@ -169,8 +169,7 @@ module ApplicationHelper
 	  if rows[i+x] == nil
 	    @@conversion[i+x] = "ERROR!"
 	  else
-	    #@@conversion[i+x] = rows[i+x].text.gsub(/[']/, "\\\\\'")
-		@@conversion[i+x] = rows[i+x]
+	    @@conversion[i+x] = rows[i+x].text.gsub(/[']/, "\\\\\'")
 	  end
 	  x+=1
 	end
