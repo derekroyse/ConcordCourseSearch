@@ -165,14 +165,14 @@ module ApplicationHelper
 		i += 1
       else
 		x = 0
-	while x < 18
-	  if rows[i+x] == nil
-	    @@conversion[i+x] = "ERROR!"
-	  else
-	    @@conversion[i+x] = rows[i+x].text.gsub(/[']/, "\\\\\'")
-	  end
-	  x+=1
-	end
+		while x < 18
+		  if rows[i+x] == nil
+			@@conversion[i+x] = "ERROR!"
+		  else
+			@@conversion[i+x] = rows[i+x].text.gsub(/[']/, "\\\\\'")
+		  end #end ifelse
+		x+=1
+	    end #end while
 	   @@queryString3 = "INSERT IGNORE INTO SEMESTER" + row[1].to_s + "(CRN, SUBJ, CRS, SEC, TITLE, CH, MAX, ENR,
 			     AVAIL, WL, DAYS, STIME, ETIME, ROOM, WK, INSTRUCTOR, EF, STARTSON)
 	                     VALUES(" + @@conversion[i+2] + ",'" + @@conversion[i+3] + "','" + 
@@ -185,18 +185,6 @@ module ApplicationHelper
 			     @@conversion[i+16] + ",'" + @@conversion[i+17] + "','" + 
 			     @@conversion[i+16] + "','" + @@conversion[i+17] + "')"
 				 
-		# queryString3 = "INSERT IGNORE INTO SEMESTER201501(CRN, SUBJ, CRS, SEC, TITLE, CH, MAX, ENR, 
-                # AVAIL, WL, DAYS, STIME, ETIME, ROOM, WK, INSTRUCTOR, EF, STARTSON) VALUES(" + 
-                 # @@conversion[0] + "," + "\'" + @@conversion[1] + "\'" + "," + 
-                 # @@conversion[2] + "," + @@conversion[3] + "," + "\'" +
-                 # @@conversion[4]+ "\'" + "," + @@conversion[5] + "," + 
-                 # @@conversion[6] + "," + @@conversion[7] + "," + 
-                 # @@conversion[8] + "," + @@conversion[9] + "," + "\'" +
-                 # @@conversion[10]+ "\'" + "," + @@conversion[11] + "," + 
-                 # @@conversion[12] + "," + "\'" + @@conversion[13] + "\'" + "," + 
-                 # @@conversion[14] + "," + "\'" + @@conversion[15] + "\'" + "," + "\'" +
-                 # @@conversion[16] + "\'" + "," + "\'" + @@conversion[17] + "\'" + ")" 
-				 
 		#queryString3 = "INSERT IGNORE INTO SEMESTER201501(CRN, SUBJ, CRS, SEC, TITLE, CH, MAX, ENR, 
 		#					AVAIL, WL, DAYS, STIME, ETIME, ROOM, WK, INSTRUCTOR, EF, STARTSON)
 		#					VALUES(1,'TEST',1,1,'TEST',1,1,1,1,1,'TEST',1,1,'TEST',1,'TEST','TEST','TEST')"	
@@ -207,6 +195,7 @@ module ApplicationHelper
       i+=1
     end # end while
   end # end semester loop
+  
   rescue Mysql::Error => e
     #nothing
   ensure
